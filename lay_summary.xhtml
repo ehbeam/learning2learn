@@ -12,40 +12,105 @@
     <style>
 
         * { 
-            font-family: Avenir;
-            padding: 0; 
-            margin: 0; 
+          font-family: Avenir;
+          padding: 0; 
+          margin: 0; 
         }
 
-        canvas { 
-            font-family: Avenir;
-            background: #eee; 
-            display: block; 
-            margin: 0 auto;
-            border-radius: 10px;
-            border: black 2px solid;
+        h1 {
+          font-size: 35px;
         }
 
         button {
-            font-size: 14pt;
-            background: #eee; 
-            margin: 10px;
-            padding: 5px;
-            padding-left: 40px;
-            padding-right: 40px;
-            border-radius: 5px;
-            border: black 1.5px solid;
+          font-size: 14pt;
+          color: white;
+          background: #969696; 
+          margin: 10px;
+          padding: 5px;
+          padding-left: 40px;
+          padding-right: 40px;
+          border-radius: 5px;
+          border: black 1.5px solid;
+          box-shadow: 3px 3px 5px #9b9b9b;
         }
 
         button:hover {
-            cursor: pointer;
+          cursor: pointer;
+          background-color: #4f4f4f;
+        }
+
+        button:focus {
+          outline: none;
+        }
+
+        a {
+          color: #4c4c4c;
+        }
+
+        ol {
+          padding-left: 50px;
+        }
+
+        li {
+          margin: 10px 0;
         }
 
         .textContainer {
-            display: inline-block;
-            width: 750px;
-            margin-left: 20%;
-            margin-right: 20%;
+          display: inline-block;
+          width: 60%;
+          margin-left: 20%;
+          margin-right: 20%;
+        }
+
+        .captionContainer {
+          display: inline-block;
+          width: 45%;
+          text-align: center;
+          font-size: 14px;
+          color: gray;
+        }
+
+        #gameCanvas { 
+          font-family: Avenir;
+          background: #eee; 
+          display: block; 
+          margin: 0 auto;
+          border-radius: 10px;
+          border: black 2px solid;
+          box-shadow: 3px 3px 5px #9b9b9b;
+        }
+
+        #taskImage {
+          border-radius: 10px;
+          border: black 2px solid;
+          box-shadow: 3px 3px 5px #9b9b9b;
+        }
+
+        .positionButton {
+          font-family: Avenir;
+          font-size: 16px;
+          font-style: bold;
+          color: white;
+          border-radius: 5px;
+          background-color: #969696;
+          width: 82px;
+          height: 35px;
+          padding: 5px;
+          padding-top: 6px;
+          padding-bottom: 3px;
+          margin-top: 10px;
+          margin-bottom: -4px;
+          cursor: pointer;
+          box-shadow: 3px 3px 5px #9b9b9b;
+          border: 2px solid black;
+        }
+
+        .positionButton:hover {
+          background-color: #4f4f4f;
+        }
+
+        .positionButton:focus {
+          outline: none;
         }
 
         X3D, x3d {
@@ -54,8 +119,8 @@
           padding: 0;
           border: none;
           border-radius: 10px;
-          background-color: #f7f7f7;
-          background: #f7f7f7;
+          background-color: white;
+          background: white;
         }
 
         object {
@@ -64,10 +129,10 @@
           border: none;
           z-index: 0;
           width: 100%;
-          height: 80%;
+          height: 100%;
           border-radius: 10px;
-          background-color: #f7f7f7;
-          background: #f7f7f7;
+          background-color: white;
+          background: white;
         }
 
         X3D:hover, 
@@ -107,11 +172,11 @@
 
         .x3dom-progress {
           margin: 0;
-          padding: 6px 8px 0px 26px;
+          padding: 6px 8px 0px 0px;
           left: 0px;
           top: 0px;
           position: absolute;
-          color: #0f0;
+          color: white;
           font-family: Avenir;
           line-height: 10px;
           font-size: 10px;
@@ -120,7 +185,7 @@
           border: 0px;
           background-position: 4px 4px;
           background-repeat: no-repeat;
-          background-color: #fff;
+          background-color: white;
           background-color: rgba(255, 255, 255, 0.9);
           z-index: 100;
           border-radius: 10px;
@@ -143,7 +208,7 @@
           right: 10px;
           top: 10px;
           position: absolute;
-          color: #000;
+          color: white;
           font-family: Avenir;
           line-height: 10px;
           font-size: 10px;
@@ -174,7 +239,7 @@
           opacity: 0.9;
           z-index: 1000;
           font-family: Avenir;
-          color: #C8C8C8;
+          color: white;
           font-weight: bold;
           text-transform: uppercase;
           cursor: help;
@@ -219,7 +284,7 @@
           list-style: none;
           font-size: 9px;
           line-height: 16px;
-          margin:0;
+          margin: 0;
           padding: 0;
           padding-top: 2px;
           border-radius: 10px;
@@ -274,7 +339,7 @@
           white-space: pre-wrap;
           font-family: Avenir;
           font-size: x-small;
-          color: #00ff00;
+          color: white;
           background-color: black;
           margin-right: 10px;
           border-radius: 10px;
@@ -293,7 +358,7 @@
         }
 
         .x3dom-nox3d p { 
-          color: #f7f7f7;
+          color: white;
           font-size: 14px;
           border-radius: 10px;
           background-color: none;
@@ -301,7 +366,7 @@
         }
 
         .x3dom-nox3d a { 
-          color: #f7f7f7;
+          color: white;
           font-size: 14px;
           border-radius: 10px;
           background-color: none;
@@ -320,7 +385,7 @@
         }
 
         #viewer {
-          display: none;
+          display: inline-block;
           overflow: visible;
           position: relative;
           left: 50%;
@@ -345,16 +410,16 @@
 
 <div class="textContainer">
     <p>
-       Artificial intelligence (AI) has rocketed ahead in its ability to recognize human faces, make medical diagnoses, and drive autonomous cars. A key limitation of AI is that its algorithms require vast amounts of data to train. Humans, by contrast, can "get" the crux of many types of problems despite highly limited prior experience. As a quick demonstration of this, press play below.
+       Artificial intelligence (AI) has been rocketing ahead in its ability to recognize human faces, make medical diagnoses, and drive autonomous cars. A remaining limitation on the growth of AI is that its algorithms require vast amounts of data to train. Humans, by contrast, can "get" the crux of many types of problems even with little context and experience. As a quick demonstration of this, press play below.
     </p>
 </div>
 <br />
 
 <br />
-<canvas id="myCanvas" width="420" height="400"></canvas>
+<canvas id="gameCanvas" width="420" height="380"></canvas>
 
 <script><![CDATA[
-    var canvas = document.getElementById("myCanvas");
+    var canvas = document.getElementById("gameCanvas");
     var ctx = canvas.getContext("2d");
     var ballRadius = 10;
     var x = canvas.width/2;
@@ -368,11 +433,11 @@
     var leftPressed = false;
     var brickRowCount = 5;
     var brickColumnCount = 3;
-    var brickWidth = 75;
+    var brickWidth = 70;
     var brickHeight = 20;
-    var brickPadding = 10;
+    var brickPadding = 9;
     var brickOffsetTop = 40;
-    var brickOffsetLeft = 30;
+    var brickOffsetLeft = 16;
     var score = 0;
     var lives = 3;
 
@@ -432,14 +497,14 @@
     function drawBall() {
         ctx.beginPath();
         ctx.arc(x, y, ballRadius, 0, Math.PI*2);
-        ctx.fillStyle = "#b26f5b";
+        ctx.fillStyle = "#6f96d6";
         ctx.fill();
         ctx.closePath();
     }
     function drawPaddle() {
         ctx.beginPath();
         ctx.rect(paddleX, canvas.height-paddleHeight, paddleWidth, paddleHeight);
-        ctx.fillStyle = "#b26f5b";
+        ctx.fillStyle = "#606060";
         ctx.fill();
         ctx.closePath();
     }
@@ -472,9 +537,10 @@
     }
     function drawPause() {
       var img = new Image();
-      img.src = "https://image.flaticon.com/icons/svg/744/744594.svg";
+      img.src = "https://raw.githubusercontent.com/ehbeam/learning2learn/master/arcade_game_tp.png";
+      // Original source is "https://image.flaticon.com/icons/svg/744/744594.svg"
       img.onload = function(){
-        ctx.drawImage(img, 0, 0, 420, 400);
+        ctx.drawImage(img, 20, 5, 380, 370);
       }
     }
 
@@ -539,40 +605,59 @@
     <button id="playButton" onclick="draw();">Play</button>
     <button id="stopButton" onclick="stop();">Stop</button>
 </center>
+
+<center><div class="captionContainer">
+    <p>
+      Image adapted from <a href="https://cdn3.vectorstock.com/i/1000x1000/21/97/simple-line-drawn-vintage-game-arcade-cabinet-icon-vector-3632197.jpg" target="_blank">here</a>. Game adapted from <a href="https://github.com/end3r/Gamedev-Canvas-workshop" target="_blank">here</a>.
+    </p>
+</div></center>
 <br/>
 
 <div class="textContainer">
     <p>
-       Even if you've never played Breakout before, you were likely able to surmise within a few rounds that you would lose lives by letting the ball fall to the ground. You could win the game by bouncing the ball off all the blocks. What enables humans to learn so quickly? One theory is that we are skilled in "learning how to learn." This means that we are able to extract general rules from prior experiences ― e.g., that games typically have the goals of winning points and avoiding loss of lives ― and apply them to relevant future scenarios.
+       Even if you've never played Breakout before, there are enough consistencies with other popular arcade games that you can quickly surmise its rules. If you noticed the scoreboard, you may have gone into the first few rounds of play seeking out a strategy that would rack up points and prevent you from losing lives. This is an example of knowing how to learn in a new context by transferring over abstract rules from prior related experiences. Humans instinctively "learn how to learn" in this way beginning in early childhood. Computers, by contrast, need either programs that tell them explicitly how to play a game, or models that have observed how a game is played over many more instances than a human would typically require.
     </p><br/>
 
     <p>
-       Remarkably, AI has exceeded human performance in Breakout and developed sophisticated gaming strategies (e.g., bouncing the ball into the nook above the blocks where it can ricochet between them and the ceiling). Yet, AI has made little progress in learning how to apply general rules of play across games with a similar premise. A new AI model has thus been trained for every game in the Atari repertoire. Each of these seperate models has required dozens or hundreds of trials to appreciate the basic objective of its corresponding game, let alone reach competitive levels of play. 
+       Through deep learning, AI has exceeded human performance in Breakout and developed gaming strategies with an impressive level of sophistication (e.g., bouncing the ball into the nook above the blocks where it can ricochet between them and the ceiling).<sup>1</sup> Yet, AI has made little progress in learning how to apply general rules of play across games with a similar premise. For each game in the Atari repertoire, a separate AI model has had to be trained. Each of these models has required dozens or hundreds of trials to appreciate the basic objective of its corresponding game, let alone reach competitive levels of play. 
     </p><br/>
 
     <p>
-       At DeepMind, researchers are leveraging knowledge of how the brain learns in order to develop improved AI algorithms. Their director of neuroscience research, Matt Botvinick, has likened this strategy to understanding how birds fly in order to build better planes. While there are plenty of differences between birds and planes, there are physical principles (e.g., lift) that may be gleaned from the real-world implementation of flying and then applied to engineer new, more powerful devices.
+       At <a href="https://deepmind.com/" target="_blank">DeepMind</a>, researchers are leveraging knowledge of how the brain learns in order to develop more efficient AI algorithms. Their director of neuroscience research, Matt Botvinick, has <a href="https://youtu.be/uv4Hh3wDH14" target="_blank">likened this strategy</a> to understanding how birds fly in order to build better planes. While there are plenty of differences between birds and planes, there are physical principles (e.g., lift) that may be gleaned from the real-world implementation of flying and then applied to engineer new, more powerful technologies.
     </p><br/>
 
     <p>
-       One of DeepMind's recent publications took this metaphor and flipped it, using model planes (i.e., AI algorithms) to test a theory for flight (i.e., for how the brain learns to learn). They started with the premise that the brain typically learns by implementing a reinforcement learning algorithm. The reinforcer in the brain is dopamine, a neuromodulator that 
-
-        that the brain learns how to learn by implementing a meta-reinforcement learning system. On the most basic level, reinforcement system
-
-
-       Specifically, the research team headed by Botvinick sought to determine whether the brain learns how to learn through a . The theorized neural system would unify two distinct mechanisms for learning known to take place in the prefrontal cortex (show in red below) and subcortical regions (shown on the other side in blue). 
-    </p><br/>
-
-    <p>
-       Dopamine system
-    </p><br/>
+       One of DeepMind's recent publications advanced this process of innovation one step further, showing that their new model "plane" (i.e., AI algorithm) had achieved a property of natural "flight" (i.e., the brain's ability to learn how to learn).<sup>2</sup> They started with the premise that the brain typically learns by implementing a reinforcement learning algorithm. The reinforcer in the brain is dopamine, a neuromodulator that varies its levels based on the difference between how much of a reward is expected and how much is actually received. Botvinick and his team theorized that subcortical dopaminergic neurons could set the synaptic weights in a second, <i>meta</i>-reinforcement learning sytem in the prefrontal cortex (shown in red below). They modeled this dual learning system using a recurrent neural network that simulated dopamine signals and a separate prefrontal learning system.
+    </p>
 </div>
 
 <div id="viewerPanel">
-<div id="viewer" style="display:inline-block;">
-  
-  <figure style='margin-left:-10px;margin-right:-17px'>
-  <X3D id="X3D_ROOT" width="450px" height="420px" profile="Interchange" version="3.2" xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance" xsd:noNamespaceSchemaLocation="http://www.web3d.org/specifications/x3d-3.2.xsd"><Scene id="X3D_SCENE" pickMode="color" transparency="1">
+<div id="viewer">
+<figure style="margin-left:15%;margin-right:15%">
+  <table style="display:inline;">
+  <tr valign="top"><td>
+    <input class="positionButton" id="L_VIEWBUTTON_L" type="button" value="Left"/><br/>
+    <input class="positionButton" id="L_VIEWBUTTON_R" type="button" value="Right"/><br/>
+    <input class="positionButton" id="L_VIEWBUTTON_P" type="button" value="Posterior"/><br/>
+    <input class="positionButton" id="L_VIEWBUTTON_A" type="button" value="Anterior"/><br/>
+    <input class="positionButton" id="L_VIEWBUTTON_I" type="button" value="Inferior"/><br/>
+    <input class="positionButton" id="L_VIEWBUTTON_S" type="button" value="Superior"/><br/>
+    <br/>
+  </td></tr>
+  <tr><td>
+    <span id="NOLABELSBUTTON" type="" value="" style="font-family:Avenir"/>
+    <span id="SHOWLABELSBUTTON" type="" value="" style="font-family:Avenir"/>
+    <span id="LABELS2VALUES" type="" value="" style="font-family:Avenir"/>
+    <span id="COLORMAP" type="" value="" style="font-family:Avenir"/>
+    <span id="COLORLIMITS" type="" value="" style="font-family:Avenir"/>
+    <span id="SHOWVALUESBUTTON" type="" value="" style="font-family:Avenir"/>
+    <span id="BGCOLOR" type="" value="232 232 232" style=""/>
+    <span id="BGCOLORBUTTON" type="" value="232 232 232" style="font-family:Avenir"/>
+    <br/>
+  </td>
+  </tr>
+</table>
+  <X3D id="X3D_ROOT" width="500px" height="315px" profile="Interchange" version="3.2" xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance" xsd:noNamespaceSchemaLocation="http://www.web3d.org/specifications/x3d-3.2.xsd"><Scene id="X3D_SCENE" pickMode="color" transparency="1">
   <Background id="X3D_BACKGROUND" transparency="1"/>
   <Viewpoint id="L_X3D_VIEW_L" fieldOfView="0.032725" position="-5613.253605,-17.6963,15.82345" description="Left" orientation="-0.57735 0.57735 0.57735 -2.0944" centerOfRotation="-34.520805,-17.6963,15.82345"/>
   <Viewpoint id="L_X3D_VIEW_R" fieldOfView="0.032725" position="5544.211995,-17.6963,15.82345" description="Right" orientation="0.57735 0.57735 0.57735 2.0944" centerOfRotation="-34.520805,-17.6963,15.82345"/>
@@ -596,18 +681,53 @@ colorIndex="41 41 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42
     </Transform>
   </Scene></X3D> 
 </figure>
+</div>
+</div>
 
-</div>
-</div>
+<center><div class="captionContainer">
+    <p>
+      The prefrontal cortex (red) is thought to "learn how to learn" by implementing a meta-reinforcement learning algorithm. Its synaptic weights are tuned by input from dopamine neurons in subcortical regions (blue, medial aspect) which support reinforcement learning as it's classically defined. Brain structures are segmented above according to the <a href="http://neuro.imm.dtu.dk/wiki/Harvard-Oxford_Atlas" target="_blank">Harvard-Oxford atlas</a>. Visualization adapted from the <a href="https://scalablebrainatlas.incf.org/human/HOA06" target="_blank">Scalable Brain Atlas</a>. 
+    </p>
+</div></center>
+<br/>
 
 <div class="textContainer">
     <p>
-       Crucial experiment
+      The researchers proceeded to show that their model was able to learn like the brain by having it perform the same kinds of tasks as monkeys and humans in previous neuroscience studies. One of these tasks was adapted from a classic primate experiment led by Harry Harlow in 1949. In the original study, two objects were set before a monkey who would have to choose which one covered a food reward. The objects remained the same for six trials, over which the monkey was able to learn which object was rewarded. Then, the objects were switched out for two new objects. The meta-reinforcement learning model performed a digital version of this task in which the objects were displayed on simulated screens (see below).
+    </p><br/>
+</div>
+
+<center><img id="taskImage" width="420px" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/harlow_task.gif"/></center>
+
+<center><div class="captionContainer">
+    <p>
+      A simulated task performed by the meta-reinforcement learning algorithm. Over six trials, one object in each pair was rewarded. The pair of objects was then switched. In order to demonstrate "learning to learn," the model would have to pick up on the rule of the game that one of the two objects in each new pair would be rewarded. Figure provided <a href="https://deepmind.com/blog/prefrontal-cortex-meta-reinforcement-learning-system/#gif-202" target="_blank">here</a> by DeepMind.
+    </p>
+</div></center>
+<br/>
+
+<div class="textContainer">
+    <p>
+      When a monkey performs this task, it initially chooses randomly between the objects. Over a few sets of objects, the monkey "gets" the point of the game and quickly settles on the object hiding a tasty reward in each pair. Remarkably, the data recorded over the course of training Botvinick's meta-reinforcement learning model showed the same pattern as the monkey , indicating that the model could replicate the monkey's learning process. Unlike the monkey, which required about 200 sets of objects to max out its performance, the model reached peak performance after just 6 object sets. This suggests that the model inspired by neural mechanisms has the capacity to outpace our neurobiology.
     </p><br/>
 
     <p>
-       Future implications
+      This line of research represents a fruitful intersection of computer science and neurobiology that has already borne promising results. However, if your primary interest is in understanding the brain, you may be left a tad unsatisfied. The researchers did <i>not</i> demonstrate here that the brain necessarily implements a meta-reinforcement learning algorithm in its prefrontal cortex. To go beyond offering circumstantial evidence for this theory, future researchers will need to show that dopamine neurons set synaptic weights in the prefrontal cortex, and that disrupting those weights impedes the ability to learn how to learn.
     </p><br/>
+
+    <p>
+      From the engineer's perspective, these results may be of immediate interest in developing improved applications of AI. In the near future, more efficient reinforcement learning algorithms may facilitate  dynamic and individualized medical diagnostics; they may accelerate the deployment of autonomous vehicles on the roads. AI isn't just playing games anymore. It will be an exciting time for engineers and ethicists alike as technology advances beyond our own neural mechanisms.
+    </p><br/>
+
+    <h2>
+      References
+    </h2>
+
+    <ol>
+      <li>Mnih, V. <i>et al.</i> <a href="https://www.nature.com/articles/s41593-018-0147-8" target="_blank">Playing Atari with deep reinforcement learning</a>. Preprint in <i>arXiv</i> (2013).</li>
+      <li>Wang, J. X. <i>et al.</i> <a href="https://www.nature.com/articles/s41593-018-0147-8" target="_blank">Prefrontal cortex as a meta-reinforcement learning system</a>. <i>Nature Neuroscience</i> (2018).</li>
+    </ol><br/>
+    
 </div>
 <br />
 
@@ -5259,20 +5379,27 @@ else
       }
     }
     for (var ch in g_views) {
+      var button = document.getElementById('L_VIEWBUTTON_'+ch);
+      button.onclick = function(event) {
+        var ch = this.id.substr(-1);
+        document.getElementById('L_X3D_VIEW_'+ch).setAttribute('bind','true');
+      }
+    }
+    for (var ch in g_views) {
       if (ch == 'L') { var suf = 'R' } else {
         if (ch == 'R') { var suf = 'L' } else {
           var suf = ch;
         }
       }
-      var button = document.getElementById('R_VIEWBUTTON_'+suf);
+      var button = document.getElementById('L_VIEWBUTTON_'+suf);
       button.onclick = function(event) {
         var ch = this.id.substr(-1);
-        if (ch == 'L') { var suf = 'R' } else {
-        if (ch == 'R') { var suf = 'L' } else {
+        if (ch == 'L') { var suf = 'L' } else {
+        if (ch == 'R') { var suf = 'R' } else {
             var suf = ch;
           }
         }
-        document.getElementById('R_X3D_VIEW_'+suf).setAttribute('bind','true');
+        document.getElementById('L_X3D_VIEW_'+suf).setAttribute('bind','true');
       }
     }
   
@@ -5283,14 +5410,8 @@ else
       button.onclick();
     }
     if (g_init['cam'] != '') {
-      var button = document.getElementById('R_VIEWBUTTON_'+g_init['cam']);
+      var button = document.getElementById('L_VIEWBUTTON_'+g_init['cam']);
       button.onclick();
-    }
-    
-    if (format=='png') {
-      var x3d = document.getElementById("R_X3D_ROOT");
-      var img = x3d.runtime.getScreenshot();
-      window.location = img;
     }
   }
 
