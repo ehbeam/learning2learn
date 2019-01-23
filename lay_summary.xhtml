@@ -80,7 +80,7 @@
           box-shadow: 3px 3px 5px #9b9b9b;
         }
 
-        #taskImage {
+        .taskImage {
           border-radius: 10px;
           border: black 2px solid;
           box-shadow: 3px 3px 5px #9b9b9b;
@@ -693,15 +693,15 @@ colorIndex="41 41 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42
 
 <div class="textContainer">
     <p>
-      The researchers proceeded to show that their model was able to learn like the brain by having it perform the same kinds of tasks as monkeys and humans in previous neuroscience studies. One of these tasks was adapted from a classic primate experiment led by Harry Harlow in 1949. In the original study, two objects were set before a monkey who would have to choose which one covered a food reward. The objects remained the same for six trials, over which the monkey was able to learn which object was rewarded. Then, the objects were switched out for two new objects. The meta-reinforcement learning model performed a digital version of this task in which the objects were displayed on simulated screens (see below).
+      The researchers proceeded to show that their model was able to learn like the brain by having it perform the same kinds of tasks as monkeys and humans in previous neuroscience studies. One of these tasks was adapted from a classic primate experiment led by Harry Harlow in 1949.<sup>3</sup> In the original study, two objects were set before a monkey who would have to choose which one covered a food reward. The objects remained the same for six trials, over which the monkey was able to learn which object was rewarded. Then, the objects were switched out for two new objects. The meta-reinforcement learning model performed a digital version of this task in which the objects were displayed on simulated screens (see below).
     </p><br/>
 </div>
 
-<center><img id="taskImage" width="420px" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/harlow_task.gif"/></center>
+<center><img class="taskImage" width="420px" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/harlow_task.gif"/></center>
 
 <center><div class="captionContainer">
     <p>
-      A simulated task performed by the meta-reinforcement learning algorithm. Over six trials, one object in each pair was rewarded. The pair of objects was then switched. In order to demonstrate "learning to learn," the model would have to pick up on the rule of the game that one of the two objects in each new pair would be rewarded. Figure provided <a href="https://deepmind.com/blog/prefrontal-cortex-meta-reinforcement-learning-system/#gif-202" target="_blank">here</a> by DeepMind.
+      Simulation of task developed by Harlow (1949) that was performed by the meta-reinforcement learning algorithm. Over six trials, one object in each pair was rewarded. The pair of objects was then switched. In order to demonstrate "learning to learn," the model would have to pick up on the rule of the game that one of the two objects in each new pair would be rewarded. Figure provided <a href="https://deepmind.com/blog/prefrontal-cortex-meta-reinforcement-learning-system/#gif-202" target="_blank">here</a> by DeepMind.
     </p>
 </div></center>
 <br/>
@@ -710,7 +710,18 @@ colorIndex="41 41 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42
     <p>
       When a monkey performs this task, it initially chooses randomly between the objects. Over a few sets of objects, the monkey "gets" the point of the game and is able to settle on the object hiding the reward after a single trial. Remarkably, the data recorded over the course of training Botvinick's meta-reinforcement learning model showed the same pattern as the monkey, indicating that the model could replicate the monkey's learning process. Like the monkey, which required about 300 sets of objects to max out its performance, the model reached peak performance after 6 rounds with 50 sets of objects each. This suggests that by incorprating meta-reinforcement learning strategies, AI may learn as quickly as the brain and be less constrained by the size of its training dataset.
     </p><br/>
+</div>
 
+<center><img class="taskImage" width="600px" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/harlow_task.png"/></center><br/>
+
+<center><div class="captionContainer">
+    <p>
+      Performance on the Harlow task. The overall pattern and number of object sets require to reach peak performance was similar between the monkey (left) and the meta-reinforcement learning model (right). Adapted from Figure 6 of Wang <i>et al</i>.<sup>2</sup>
+    </p>
+</div></center>
+<br/>
+
+<div class="textContainer">
     <p>
       This line of research represents a fruitful intersection of computer science and neurobiology that has already borne promising results. However, if your primary interest is in understanding the brain, you may be left a tad unsatisfied. The researchers did <i>not</i> demonstrate here that the brain necessarily implements a meta-reinforcement learning algorithm in its prefrontal cortex. To go beyond offering circumstantial evidence for this theory, future researchers will need to show that dopamine neurons set synaptic weights in the prefrontal cortex, and that disrupting those weights impedes the ability to learn how to learn.
     </p><br/>
@@ -724,8 +735,13 @@ colorIndex="41 41 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42
     </h2>
 
     <ol>
+
       <li>Mnih, V. <i>et al.</i> <a href="https://www.nature.com/articles/s41593-018-0147-8" target="_blank">Playing Atari with deep reinforcement learning</a>. Preprint in <i>arXiv</i> (2013).</li>
+
       <li>Wang, J. X. <i>et al.</i> <a href="https://www.nature.com/articles/s41593-018-0147-8" target="_blank">Prefrontal cortex as a meta-reinforcement learning system</a>. <i>Nature Neuroscience</i> (2018).</li>
+
+      <li>Harlow, H. <a href="https://psycnet.apa.org/record/1949-03097-001" target="_blank">The formation of learning sets</a>. <i>Psychological Review</i> (1949).</li>
+
     </ol><br/>
     
 </div>
