@@ -57,14 +57,14 @@
 
         .textContainer {
           display: inline-block;
-          width: 60%;
+          width: 65%;
           margin-left: 20%;
           margin-right: 20%;
         }
 
         .captionContainer {
           display: inline-block;
-          width: 45%;
+          width: 55%;
           text-align: center;
           font-size: 14px;
           color: gray;
@@ -80,10 +80,51 @@
           box-shadow: 3px 3px 5px #9b9b9b;
         }
 
-        .taskImage {
+        .taskPerf {
+          padding: 20px;
           border-radius: 10px;
           border: black 2px solid;
           box-shadow: 3px 3px 5px #9b9b9b;
+        }
+
+        #harlowTask {
+          -webkit-touch-callout: none;
+          -webkit-user-select: none;
+          -khtml-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+        }
+
+        .canvas {
+          border: 2px solid black; 
+          border-radius: 10px;
+          cursor: pointer;
+          margin: 20px;
+          background-color: white;
+          box-shadow: 3px 3px 5px #9b9b9b;
+        }
+
+        .canvas:hover {
+          box-shadow: 0px 0px 20px #d3c472;
+        }
+
+        .taskImg {
+          display: none;
+        }
+
+        #scoreBoard {
+          font-size: 20px;
+          width: 660px; 
+          height: 40px; 
+          background: #e2e2e2; 
+          border-radius: 25px;
+          display: table-cell; 
+          vertical-align: middle;
+        }
+
+        #congrats {
+          font-size: 60px;
         }
 
         .positionButton {
@@ -410,6 +451,13 @@
 <h4><center>By Ellie Beam</center></h4>
 <br/>
 
+<center>
+  <div class="captionContainer">
+  Lay summary of <a href="https://www.nature.com/articles/s41593-018-0147-8">Wang <i>et al.</i> (2018) <i>Nature Neuroscience</i></a>.
+  </div>
+</center>
+<br/>
+
 <div class="textContainer">
     <p>
        Artificial intelligence (AI) has rocketed ahead in its ability to recognize human faces, make medical diagnoses, and drive autonomous cars. A remaining limitation on the growth of AI is that its algorithms require vast amounts of data to train. Humans, by contrast, can "get" the crux of many types of problems even with little context and experience. As a quick demonstration of this, press play below.
@@ -617,19 +665,15 @@
 
 <div class="textContainer">
     <p>
-       Even if you've never played Breakout before, there are enough consistencies with other popular arcade games that you can quickly surmise its rules. If you noticed the scoreboard, you may have gone into the first few rounds of play seeking out a strategy that would rack up points and prevent you from losing lives. This is an example of knowing how to learn in a new context by transferring over abstract rules from prior related experiences. Humans instinctively "learn how to learn" in this way beginning in early childhood. Computers, by contrast, need either programs that tell them explicitly how to play a game, or models that have observed how a game is played over many more instances than a human would typically require.
+      Even if you've never played Breakout before, you were probably able to score pretty well on your first try. If you noticed the scoreboard, you may have gone into the first few rounds of play seeking out a strategy that would rack up points and prevent you from losing lives. This is an example of knowing how to learn in a new context by transferring over abstract rules from prior related experiences. Humans instinctively "learn how to learn" in this way beginning in early childhood. 
     </p><br/>
 
     <p>
-       Through deep learning, AI has exceeded human performance in Breakout and developed gaming strategies with an impressive level of sophistication (e.g., bouncing the ball into the nook above the blocks where it can ricochet between them and the ceiling).<sup>1</sup> Yet, AI has made little progress in learning how to apply general rules of play across games with a similar premise. For each game in the Atari repertoire, a separate AI model has had to be trained. Each of these models has required dozens or hundreds of trials to appreciate the basic objective of its corresponding game, let alone reach competitive levels of play. 
+      Through deep learning, AI has exceeded human performance in Breakout and developed gaming strategies with an impressive level of sophistication (e.g., bouncing the ball into the nook above the blocks where it can ricochet between them and the ceiling).<sup>1</sup> Yet, AI has made little progress in learning how to apply general rules of play across games with a similar premise. For each game in the Atari repertoire, a separate AI model has had to be trained. Each of these models has required dozens or hundreds of trials to appreciate the basic objective of its corresponding game, let alone reach competitive levels of play. 
     </p><br/>
 
     <p>
-       At <a href="https://deepmind.com/" target="_blank">DeepMind</a>, researchers leverage knowledge of how the brain learns in order to develop more efficient AI algorithms. Their director of neuroscience research, Matt Botvinick, has <a href="https://youtu.be/uv4Hh3wDH14" target="_blank">likened this strategy</a> to understanding how birds fly in order to build better planes. While there are plenty of differences between birds and planes, there are physical principles (e.g., lift) that may be gleaned from the natural implementation of flying and then applied to engineer new, more powerful technologies.
-    </p><br/>
-
-    <p>
-       In a recent publication, DeepMind advanced this process of innovation one step further, showing that their new model "plane" (i.e., AI algorithm) had achieved a property of natural "flight" (i.e., the brain's ability to learn how to learn).<sup>2</sup> They started with the premise that the brain typically learns by implementing a reinforcement learning algorithm. The reinforcer in the brain is dopamine, a neuromodulator that varies its levels based on the difference between how much of a reward is expected and how much is actually received. Botvinick and his team theorized that subcortical dopaminergic neurons could set the synaptic weights in a second, <i>meta</i>-reinforcement learning system in the prefrontal cortex (shown in red below). They modeled this dual learning system using a recurrent neural network that simulated dopamine signals and a separate prefrontal learning system.
+      How does the brain learn so quickly with so little information? It's long been understood that the brain tracks how big of a reward it anticipates receiving from a given action. If the reward is larger than expected, the action that led to it is reinforced by the release of dopamine from neurons in subcortical regions (blue in the figure below). In addition to this subcortical system for learning, the prefrontal cortex (red) represents rewards, actions, and expectations in the activity of its neurons. Until recently, there was no overarching model for how the subcortical and prefrontal systems work together to support the ability to learn how to learn.
     </p>
 </div>
 
@@ -695,26 +739,190 @@ colorIndex="41 41 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42
 
 <div class="textContainer">
     <p>
-      The researchers proceeded to show that their model was able to learn like the brain by having it perform the same kinds of tasks as monkeys and humans in previous neuroscience studies. One of these tasks was adapted from a classic primate experiment led by Harry Harlow in 1949.<sup>3</sup> In the original study, two objects were set before a monkey who would have to choose which one covered a food reward. The objects remained the same for six trials, over which the monkey was able to learn which object was rewarded. Then, the objects were switched out for two new objects. The meta-reinforcement learning model performed a digital version of this task in which the objects were displayed on simulated screens (see below).
+       At <a href="https://deepmind.com/" target="_blank">DeepMind</a>, researchers leverage knowledge of how the brain learns in order to develop more efficient AI algorithms. Their director of neuroscience research, Matt Botvinick, has <a href="https://youtu.be/uv4Hh3wDH14" target="_blank">likened this strategy</a> to understanding how birds fly in order to build better planes. While there are plenty of differences between birds and planes, there are physical principles (e.g., lift) that may be gleaned from the natural implementation of flying and then applied to engineer new, more powerful technologies.
+    </p><br/>
+
+    <p>
+       In a recent publication, DeepMind advanced this process of innovation one step further, showing that their new model "plane" (i.e., AI algorithm) had achieved a property of natural "flight" (i.e., the brain's ability to learn how to learn).<sup>2</sup> They started with the premise that the brain typically learns by implementing a reinforcement learning algorithm. One step further, Botvinick and his team theorized that dopamine neurons could set the synaptic weights in a second, <i>meta</i>-reinforcement learning system in the prefrontal cortex (shown in red below). They modeled this dual learning system using a recurrent neural network that simulated dopamine signals and a separate prefrontal learning system.
+    </p><br/>
+
+    <p>
+      The researchers went on to show that their model was able to learn like the brain by having it perform the same kinds of tasks as monkeys and humans in previous neuroscience studies. One of these tasks was adapted from a classic experiment led by Harry Harlow in 1949.<sup>3</sup> In the original study, two objects were set before a monkey who would have to choose which one covered a food reward. The objects remained the same for six trials, over which the animal was able to learn which object was rewarded. Then, the objects were switched out for two new objects. The meta-reinforcement learning model performed a digital version of this task in which the objects were displayed on simulated screens. You can play the same kind of task below.
     </p><br/>
 </div>
 
-<center><img class="taskImage" width="420px" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/harlow_task.gif"/></center><br/>
+<div id="harlowTask" width="800px" height="800px">
 
+  <img id="airplane" class="taskImg" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/images/airplane.png" />
+  <img id="banana" class="taskImg" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/images/banana.png" />
+  <img id="camera" class="taskImg" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/images/camera.png" />
+  <img id="cat" class="taskImg" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/images/cat.png" />
+  <img id="cupcake" class="taskImg" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/images/cupcake.png" />
+  <img id="dog" class="taskImg" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/images/dog.png" />
+  <img id="donut" class="taskImg" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/images/donut.png" />
+  <img id="fox" class="taskImg" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/images/fox.png" />
+  <img id="icecream" class="taskImg" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/images/icecream.png" />
+  <img id="pizza" class="taskImg" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/images/pizza.png" />
+  <img id="shell" class="taskImg" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/images/shell.png" />
+  <img id="umbrella" class="taskImg" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/images/umbrella.png" />
+
+  <img id="BLANK" class="taskImg" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/images/BLANK.png" />
+  <img id="YES" class="taskImg" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/images/YES.png" />
+  <img id="NO" class="taskImg" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/images/NO.png" />
+
+  <br/>
+
+  <center>
+    <canvas id="canvasA" class="canvas" width="300" height="300"></canvas>
+    <canvas id="canvasB" class="canvas" width="300" height="300"></canvas>
+  </center>
+  <center>
+    <span id="congrats"></span>
+    <div id="scoreBoard">
+      <p>Score: <span id="score"></span></p>
+    </div>
+  </center>
+
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+
+  var imagesA = ["cat", "airplane", "shell", "dog", "donut", "icecream"];
+  var imagesB = ["cupcake", "fox", "banana", "camera", "pizza", "umbrella"];
+
+  var correct = ["A", "B", "B", "A", "A", "B"]
+
+  var nTrials = 0; var nEpochs = 0; var nPoints = 0; var scores = [];
+  var dx = 20; var dy = 20; var width = 250; var height = 250;
+
+  document.getElementById("score").innerHTML = nPoints;
+
+  var cA = document.getElementById("canvasA");
+  var ctxA = cA.getContext("2d");
+  var imgA = new Image();
+  imgA.src = "https://raw.githubusercontent.com/ehbeam/learning2learn/master/images/cat.png";
+  imgA.onload = function(){
+    ctxA.drawImage(imgA, dx, dy, width, height);
+  }
+
+  var cB = document.getElementById("canvasB");
+  var ctxB = cB.getContext("2d");
+  var imgB = new Image();
+  imgB.src = "https://raw.githubusercontent.com/ehbeam/learning2learn/master/images/cupcake.png";
+  imgB.onload = function(){
+    ctxB.drawImage(imgB, dx, dy, width, height);
+  }
+
+  var toggle = "OFF"
+  document.getElementById("canvasA").addEventListener("click", function(){
+    if (nEpochs < 6) {
+      if (nTrials < 6) {
+        if (toggle == "OFF") {
+          toggle = "ON";
+          nTrials = nTrials + 1;
+          if (correct[nEpochs] == "A") {
+            ctxA.globalAlpha = 0.65;
+            var imgA = document.getElementById("YES");
+            ctxA.drawImage(imgA, 0, 0, width+50, height+50);
+            ctxA.globalAlpha = 1.0;
+            nPoints = nPoints + 1;
+            document.getElementById("score").innerHTML = nPoints;
+          } else {
+            ctxA.globalAlpha = 0.65;
+            var imgA = document.getElementById("NO");
+            ctxA.drawImage(imgA, 0, 0, width+50, height+50);
+            ctxA.globalAlpha = 1.0;
+            document.getElementById("score").innerHTML = nPoints;
+        }
+      } else {
+        toggle = "OFF";
+        var imgBlank = document.getElementById("BLANK");
+        ctxA.drawImage(imgBlank, dx, dy, width, height);
+        var imgA = document.getElementById(imagesA[nEpochs]);
+        ctxA.drawImage(imgA, dx, dy, width, height);
+        ctxB.drawImage(imgBlank, dx, dy, width, height);
+        var imgB = document.getElementById(imagesB[nEpochs]);
+        ctxB.drawImage(imgB, dx, dy, width, height);
+        document.getElementById("score").innerHTML = nPoints;
+      } 
+    } else {
+        nTrials = 0; 
+        nEpochs = nEpochs + 1;
+        scores.push(nPoints);
+        nPoints = 0;
+      }
+  } else {
+      document.getElementById("canvasA").style.display = "none";
+      document.getElementById("canvasB").style.display = "none";
+      document.getElementById("congrats").innerHTML = "You finished!<br/><br/>";
+      document.getElementById("scoreBoard").innerHTML = "Scores: " + scores.join(", ");
+    }
+  });
+
+  document.getElementById("canvasB").addEventListener("click", function(){
+    if (nEpochs < 6) {
+      if (nTrials < 6) {
+        if (toggle == "OFF") {
+          toggle = "ON";
+          nTrials = nTrials + 1;
+          if (correct[nEpochs] == "B") {
+            ctxB.globalAlpha = 0.65;
+            var imgB = document.getElementById("YES");
+            ctxB.drawImage(imgB, 0, 0, width+50, height+50);
+            ctxB.globalAlpha = 1.0;
+            nPoints = nPoints + 1;
+            document.getElementById("score").innerHTML = nPoints;
+          } else {
+            ctxB.globalAlpha = 0.65;
+            var imgB = document.getElementById("NO");
+            ctxB.drawImage(imgB, 0, 0, width+50, height+50);
+            ctxB.globalAlpha = 1.0;
+            document.getElementById("score").innerHTML = nPoints;
+          }
+        } else {
+          toggle = "OFF";
+          var imgBlank = document.getElementById("BLANK");
+          ctxA.drawImage(imgBlank, dx, dy, width, height);
+          var imgA = document.getElementById(imagesA[nEpochs]);
+          ctxA.drawImage(imgA, dx, dy, width, height);
+          ctxB.drawImage(imgBlank, dx, dy, width, height);
+          var imgB = document.getElementById(imagesB[nEpochs]);
+          ctxB.drawImage(imgB, dx, dy, width, height);
+          document.getElementById("score").innerHTML = nPoints;
+        } 
+      } else {
+      nTrials = 0; 
+        nEpochs = nEpochs + 1;
+        scores.push(nPoints);
+        nPoints = 0;
+    }
+    } else {
+      document.getElementById("canvasA").style.display = "none";
+      document.getElementById("canvasB").style.display = "none";
+      document.getElementById("congrats").innerHTML = "You finished!<br/><br/>";
+      document.getElementById("scoreBoard").innerHTML = "Scores: " + scores.join(", ");
+    } 
+ });
+
+  //]]>
+</script>
+
+<br/>
 <center><div class="captionContainer">
     <p>
-      Simulation of task developed by Harlow (1949) that was performed by the meta-reinforcement learning algorithm. Over six trials, one object in each pair was rewarded. The pair of objects was then switched. In order to demonstrate "learning to learn," the model would have to pick up on the rule of the game that one of the two objects in each new pair would be rewarded. Figure provided <a href="https://deepmind.com/blog/prefrontal-cortex-meta-reinforcement-learning-system/#gif-202" target="_blank">here</a> by DeepMind.
+      Wang <i>et al.</i> (2018) trained a meta-reinforcement learning model to perform the same kind of task as shown above,<sup>1</sup> which was originally developed by the neurophysiologist Harry Harlow in 1949.<sup>3</sup> Over six trials, one object in each pair is rewarded. The pair of objects is then switched. In order to demonstrate "learning to learn," the model would have to pick up on the rule of the game that one of the two objects in each new pair would be rewarded.
     </p>
 </div></center>
 <br/>
 
 <div class="textContainer">
     <p>
-      When a monkey performs this task, it initially chooses randomly between the objects. Over a few sets of objects, the monkey "gets" the point of the game and is able to settle on the object hiding the reward after a single trial. Remarkably, the data recorded over the course of training Botvinick's meta-reinforcement learning model showed the same pattern as the monkey, indicating that the model could replicate the monkey's learning process. Like the monkey, which required about 300 sets of objects to max out its performance, the model reached peak performance after 6 rounds with 50 sets of objects each. This suggests that by incorporating meta-reinforcement learning strategies, AI may learn as quickly as the brain and be less constrained by the size of its training dataset.
+      When the brain performs this task, it initially chooses randomly between the objects. Over a few sets of objects, the brain "gets" the point of the game and is able to settle on the object hiding the reward after a single trial. This is an example of learning how to learn by applying an abstract rule from one scenario to another. Remarkably, the data recorded over the course of training Botvinick's meta-reinforcement learning model showed the same pattern as that recorded from behaving animals. In other words, the model could replicate the brain's process of learning how to learn. 
     </p><br/>
 </div>
 
-<center><img class="taskImage" width="600px" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/harlow_task.png"/></center><br/>
+<center><img class="taskPerf" width="600px" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/harlow_task.png"/></center><br/>
 
 <center><div class="captionContainer">
     <p>
@@ -729,7 +937,7 @@ colorIndex="41 41 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42
     </p><br/>
 
     <p>
-      From the engineer's perspective, these results may be of immediate interest in developing improved applications of AI. In the near future, more efficient reinforcement learning algorithms may facilitate dynamic and individualized medical diagnostics; they may accelerate the deployment of autonomous vehicles on the road. AI isn't just playing games anymore. It will be an exciting time for engineers and ethicists alike as technology advances up to and beyond the limits of our own neural mechanisms.
+      From the engineer's perspective, these results are of immediate interest in developing improved applications of AI. In the near future, more efficient reinforcement learning algorithms may facilitate dynamic and individualized medical diagnostics; they may accelerate the deployment of autonomous vehicles on the road. AI isn't just playing games anymore. It will be an exciting time for engineers and ethicists alike as technology advances up to and beyond the limits of our own neural mechanisms.
     </p><br/>
 
     <h2>
@@ -5236,7 +5444,7 @@ else
   var g_value2rgb = [];
   var g_clim = [null,null];
   var g_views = {"L":"Left","R":"Right","P":"Posterior","A":"Anterior","I":"Inferior","S":"Superior"};
-  var g_init = {"overlay":"labels","cam":"L","format":"xhtml"};
+  var g_init = {"overlay":"labels","cam":"R","format":"xhtml"};
   var g_overlay = 'labels';
 
   function dec2hex(i) {
