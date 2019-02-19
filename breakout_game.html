@@ -1,7 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
-<script src='http://www.x3dom.org/download/x3dom.js'></script>
+<html>
 <head>
     <meta charset="utf-8" />
     <title>Breakout</title>
@@ -171,7 +169,7 @@
     function drawBall() {
         ctx.beginPath();
         ctx.arc(x, y, ballRadius, 0, Math.PI*2);
-        ctx.fillStyle = "#6f96d6";
+        ctx.fillStyle = "#366E6A";
         ctx.fill();
         ctx.closePath();
     }
@@ -192,7 +190,7 @@
                     bricks[c][r].y = brickY;
                     ctx.beginPath();
                     ctx.rect(brickX, brickY, brickWidth, brickHeight);
-                    ctx.fillStyle = "#b26f5b";
+                    ctx.fillStyle = "#9D455F";
                     ctx.fill();
                     ctx.closePath();
                 }
