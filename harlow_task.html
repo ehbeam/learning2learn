@@ -13,6 +13,7 @@
         }
 
         body {
+        	font-size: 16px;
         	-webkit-touch-callout: none;
 		    -webkit-user-select: none;
 		    -khtml-user-select: none;
@@ -49,12 +50,46 @@
 		}
 
 		#congrats {
-			font-size: 60px;
+			font-size: 50px;
+		}
+
+		svg {
+		    display: block;
+		    margin: 0 auto;
+		}
+
+		.axis { 
+			font: Avenir;
+			font-size: 24px;
+			stroke-width: 2px;
+		}
+
+		.line {
+		    fill: none;
+		    stroke: gray;
+		    stroke-width: 4px;
+		}
+		  
+		.overlay {
+		  fill: none;
+		  pointer-events: all;
+		}
+
+		.dot {
+		    fill: gray;
+		    stroke: gray;
+		}
+		  
+		.focus circle {
+		  fill: none;
+		  stroke: black;
 		}
 
 	</style>
 </head>
 <body>
+
+<script src="https://d3js.org/d3.v5.min.js"></script>
 
 <div width="800px" height="800px">
 
@@ -78,6 +113,7 @@
 	<br/><br/>
 
 	<center>
+		<h2 id="instructions" style="font-size: 32px;">Choose an object:</h2><br/>
 		<canvas id="canvasA" class="canvas" width="300" height="300"></canvas>
 		<canvas id="canvasB" class="canvas" width="300" height="300"></canvas>
 	</center>
@@ -89,11 +125,82 @@
 		<div id="scoreBoard">
 			<p>Score: <span id="score"></span></p>
 		</div>
+		<br/>
+	</center>
+
+	<center>
+		<div id="d3Plot"></div>
 	</center>
 
 </div>
 
 <script>
+
+	var plotLine = function(data) {
+		var margin = {top: 50, right: 50, bottom: 100, left: 100}
+		  , width = 840 - margin.left - margin.right 
+		  , height = 350 - margin.top - margin.bottom;
+		var n = data.length;
+		var xScale = d3.scaleLinear()
+		    .domain([-0.5, n-0.5])
+		    .range([0, width]);
+		var yScale = d3.scaleLinear()
+		    .domain([0, 6]) 
+		    .range([height, 0]); 
+		var line = d3.line()
+		    .x(function(d, i) { return xScale(i); }) 
+		    .y(function(d) { return yScale(d.y); }) 
+		    .curve(d3.curveMonotoneX) 
+		var dataset = d3.range(n).map(function(d) { return {"y": data[d] } })
+		var svg = d3.select("#d3Plot").append("svg")
+		    .attr("width", width + margin.left + margin.right)
+		    .attr("height", height + margin.top + margin.bottom)
+		  .append("g")
+		    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+		svg.append("g")
+		    .attr("class", "x axis")
+		    .attr("transform", "translate(0," + height + ")")
+		    .call(d3.axisBottom(xScale)
+		    	.ticks(n)); 
+		svg.append("g")
+		    .attr("class", "y axis")
+		    .call(d3.axisLeft(yScale)
+		    	.ticks(6)); 
+		svg.append("path")
+		    .datum(dataset) 
+		    .attr("class", "line") 
+		    .attr("d", line); 
+		svg.selectAll(".dot")
+		    .data(dataset)
+		  .enter().append("circle") 
+		    .attr("class", "dot") 
+		    .attr("cx", function(d, i) { return xScale(i) })
+		    .attr("cy", function(d) { return yScale(d.y) })
+		    .attr("r", 6)
+	    svg.append("text")             
+	      .attr("transform",
+	            "translate(" + (width / 2) + " ," + 
+	                           (height + margin.top + 10) + ")")
+	      .style("text-anchor", "middle")
+	      .style("font-size", "30px")
+	      .text("Epoch");
+	    svg.append("text")
+	      .attr("transform", "rotate(-90)")
+	      .attr("y", 0 - margin.left + 20)
+	      .attr("x", 0 - (height / 2))
+	      .attr("dy", "1em")
+	      .style("text-anchor", "middle")
+	      .style("font-size", "30px")
+	      .text("Score");   
+	};
+
+	var endGame = function(scores) {
+		document.getElementById("instructions").style.display = "none";
+		document.getElementById("canvasA").style.display = "none";
+	  	document.getElementById("canvasB").style.display = "none";
+	  	document.getElementById("congrats").innerHTML = "You finished!<br/><br style='line-height:50%'/>";
+	  	document.getElementById("scoreBoard").innerHTML = "Scores: " + scores.join(", ");
+	};
 
 	var imagesA = ["cat", "airplane", "shell", "dog", "donut", "icecream"];
 	var imagesB = ["cupcake", "fox", "banana", "camera", "pizza", "umbrella"];
@@ -103,45 +210,88 @@
 	var nTrials = 0; var nEpochs = 0; var nPoints = 0; var scores = [];
 	var dx = 20; var dy = 20; var width = 250; var height = 250;
 
-	window.onload = function() {
+	document.getElementById("score").innerHTML = nPoints;
 
-	  document.getElementById("score").innerHTML = nPoints;
+	var cA = document.getElementById("canvasA");
+	var ctxA = cA.getContext("2d");
+	var imgA = new Image();
+	imgA.src = "https://raw.githubusercontent.com/ehbeam/learning2learn/master/images/" + imagesA[0] + ".png";
+	imgA.onload = function(){ ctxA.drawImage(imgA, dx, dy, width, height) };
 
-	  var cA = document.getElementById("canvasA");
-	  var ctxA = cA.getContext("2d");
-	  var imgA = document.getElementById(imagesA[nEpochs]);
-	  ctxA.drawImage(imgA, dx, dy, width, height);
+	var cB = document.getElementById("canvasB");
+	var ctxB = cB.getContext("2d");
+	var imgB = new Image();
+	imgB.src = "https://raw.githubusercontent.com/ehbeam/learning2learn/master/images/" + imagesB[0] + ".png";
+	imgB.onload = function(){ ctxB.drawImage(imgB, dx, dy, width, height) };
 
-	  var cB = document.getElementById("canvasB");
-	  var ctxB = cB.getContext("2d");
-	  var imgB = document.getElementById(imagesB[nEpochs]);
-	  ctxB.drawImage(imgB, dx, dy, width, height);
+	var toggle = "OFF"
+	document.getElementById("canvasA").addEventListener("click", function(){
+		if (nEpochs < 6) {
+			if (nTrials < 6) {
+	  		if (toggle == "OFF") {
+		  		toggle = "ON";
+		  		nTrials = nTrials + 1;
+			  	if (correct[nEpochs] == "A") {
+			  		ctxA.globalAlpha = 0.65;
+			  		var imgA = document.getElementById("YES");
+			  		ctxA.drawImage(imgA, 0, 0, width+50, height+50);
+			  		ctxA.globalAlpha = 1.0;
+			  		nPoints = nPoints + 1;
+			  		document.getElementById("score").innerHTML = nPoints;
+			  	} else {
+			  		ctxA.globalAlpha = 0.65;
+			  		var imgA = document.getElementById("NO");
+			  		ctxA.drawImage(imgA, 0, 0, width+50, height+50);
+			  		ctxA.globalAlpha = 1.0;
+			  		document.getElementById("score").innerHTML = nPoints;
+		  	}
+		  } else {
+		  	toggle = "OFF";
+		  	var imgBlank = document.getElementById("BLANK");
+		  	ctxA.drawImage(imgBlank, dx, dy, width, height);
+		  	var imgA = document.getElementById(imagesA[nEpochs]);
+		  	ctxA.drawImage(imgA, dx, dy, width, height);
+		  	ctxB.drawImage(imgBlank, dx, dy, width, height);
+		  	var imgB = document.getElementById(imagesB[nEpochs]);
+		  	ctxB.drawImage(imgB, dx, dy, width, height);
+		  	document.getElementById("score").innerHTML = nPoints;
+		  } 
+		} else {
+	  	  nTrials = 0; 
+	  	  nEpochs = nEpochs + 1;
+	  	  scores.push(nPoints);
+	  	  nPoints = 0;
+	  	}
+	} else {
+		  endGame(scores);
+		  plotLine(scores);
+		}
+	});
 
-	  var toggle = "OFF"
-	  document.getElementById("canvasA").addEventListener("click", function(){
-	  	if (nEpochs < 6) {
-	  		if (nTrials < 6) {
-		  		if (toggle == "OFF") {
-			  		toggle = "ON";
-			  		nTrials = nTrials + 1;
-				  	if (correct[nEpochs] == "A") {
-				  		ctxA.globalAlpha = 0.65;
-				  		var imgA = document.getElementById("YES");
-				  		ctxA.drawImage(imgA, 0, 0, width+50, height+50);
-				  		ctxA.globalAlpha = 1.0;
-				  		nPoints = nPoints + 1;
-				  		document.getElementById("score").innerHTML = nPoints;
-				  	} else {
-				  		ctxA.globalAlpha = 0.65;
-				  		var imgA = document.getElementById("NO");
-				  		ctxA.drawImage(imgA, 0, 0, width+50, height+50);
-				  		ctxA.globalAlpha = 1.0;
-				  		document.getElementById("score").innerHTML = nPoints;
+	document.getElementById("canvasB").addEventListener("click", function(){
+		if (nEpochs < 6) {
+			if (nTrials < 6) {
+	  		if (toggle == "OFF") {
+			  	toggle = "ON";
+			  	nTrials = nTrials + 1;
+			  	if (correct[nEpochs] == "B") {
+			  		ctxB.globalAlpha = 0.65;
+			  		var imgB = document.getElementById("YES");
+			  		ctxB.drawImage(imgB, 0, 0, width+50, height+50);
+			  		ctxB.globalAlpha = 1.0;
+			  		nPoints = nPoints + 1;
+			  		document.getElementById("score").innerHTML = nPoints;
+			  	} else {
+			  		ctxB.globalAlpha = 0.65;
+			  		var imgB = document.getElementById("NO");
+			  		ctxB.drawImage(imgB, 0, 0, width+50, height+50);
+			  		ctxB.globalAlpha = 1.0;
+			  		document.getElementById("score").innerHTML = nPoints;
 			  	}
 			  } else {
 			  	toggle = "OFF";
 			  	var imgBlank = document.getElementById("BLANK");
-			  	ctxA.drawImage(imgBlank, dx, dy, width, height);
+		  		ctxA.drawImage(imgBlank, dx, dy, width, height);
 			  	var imgA = document.getElementById(imagesA[nEpochs]);
 			  	ctxA.drawImage(imgA, dx, dy, width, height);
 			  	ctxB.drawImage(imgBlank, dx, dy, width, height);
@@ -149,66 +299,17 @@
 			  	ctxB.drawImage(imgB, dx, dy, width, height);
 			  	document.getElementById("score").innerHTML = nPoints;
 			  } 
-			} else {
-		  	  nTrials = 0; 
-		  	  nEpochs = nEpochs + 1;
-		  	  scores.push(nPoints);
-		  	  nPoints = 0;
-		  	}
-	  } else {
-	  	  document.getElementById("canvasA").style.display = "none";
-	  	  document.getElementById("canvasB").style.display = "none";
-	  	  document.getElementById("congrats").innerHTML = "You finished!<br/><br/>";
-	  	  document.getElementById("scoreBoard").innerHTML = "Scores: " + scores.join(", ");
-	  	}
-	  });
-
-	  document.getElementById("canvasB").addEventListener("click", function(){
-	  	if (nEpochs < 6) {
-	  		if (nTrials < 6) {
-		  		if (toggle == "OFF") {
-				  	toggle = "ON";
-				  	nTrials = nTrials + 1;
-				  	if (correct[nEpochs] == "B") {
-				  		ctxB.globalAlpha = 0.65;
-				  		var imgB = document.getElementById("YES");
-				  		ctxB.drawImage(imgB, 0, 0, width+50, height+50);
-				  		ctxB.globalAlpha = 1.0;
-				  		nPoints = nPoints + 1;
-				  		document.getElementById("score").innerHTML = nPoints;
-				  	} else {
-				  		ctxB.globalAlpha = 0.65;
-				  		var imgB = document.getElementById("NO");
-				  		ctxB.drawImage(imgB, 0, 0, width+50, height+50);
-				  		ctxB.globalAlpha = 1.0;
-				  		document.getElementById("score").innerHTML = nPoints;
-				  	}
-				  } else {
-				  	toggle = "OFF";
-				  	var imgBlank = document.getElementById("BLANK");
-			  		ctxA.drawImage(imgBlank, dx, dy, width, height);
-				  	var imgA = document.getElementById(imagesA[nEpochs]);
-				  	ctxA.drawImage(imgA, dx, dy, width, height);
-				  	ctxB.drawImage(imgBlank, dx, dy, width, height);
-				  	var imgB = document.getElementById(imagesB[nEpochs]);
-				  	ctxB.drawImage(imgB, dx, dy, width, height);
-				  	document.getElementById("score").innerHTML = nPoints;
-				  } 
-		  	} else {
-			  nTrials = 0; 
-		      nEpochs = nEpochs + 1;
-		      scores.push(nPoints);
-		      nPoints = 0;
-			}
 	  	} else {
-	  	  document.getElementById("canvasA").style.display = "none";
-	  	  document.getElementById("canvasB").style.display = "none";
-	  	  document.getElementById("congrats").innerHTML = "You finished!<br/><br/>";
-	  	  document.getElementById("scoreBoard").innerHTML = "Scores: " + scores.join(", ");
-	  	}	
-	 });
-
-	};
+		  nTrials = 0; 
+	      nEpochs = nEpochs + 1;
+	      scores.push(nPoints);
+	      nPoints = 0;
+		}
+		} else {
+		  endGame(scores);
+		  plotLine(scores);
+		}	
+	});
 
 </script>
 
