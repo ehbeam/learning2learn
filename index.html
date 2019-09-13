@@ -53,11 +53,22 @@
           margin: 10px 0;
         }
 
+        .footnoteLink {
+          cursor: pointer;
+          text-decoration: none;
+        }
+
+        .footnoteLink:hover {
+          text-decoration: none;
+          font-style: underline;
+        }
+
         .textContainer {
           display: inline-block;
           width: 800px;
           margin-left: 100px;
           margin-right: 100px;
+          text-align: justify;
         }
 
         .captionContainer {
@@ -65,7 +76,7 @@
           width: 700px;
           margin-left: 150px;
           margin-right: 150px;
-          text-align: center;
+          text-align: justify;
           font-size: 14px;
           color: gray;
         }
@@ -80,6 +91,20 @@
           box-shadow: 3px 3px 5px #9b9b9b;
         }
 
+        #diagramRL {
+          padding: 12px;
+          padding-right: 25px;
+          border-radius: 10px;
+          border: black 2px solid;
+          box-shadow: 3px 3px 5px #9b9b9b;
+          cursor: pointer;
+        }
+
+        #diagramRL:hover {
+          box-shadow: 0px 0px 20px #d3c472;
+        }
+
+
         #brainContainer {
           position: relative;
           display: inline-block;
@@ -91,7 +116,7 @@
           padding: 0px;
           width: 600px;
           height: 400px;
-          background: url(https://github.com/ehbeam/learning2learn/blob/master/dopamine_pathways.png?raw=true) top left no-repeat #fff;
+          background: url(https://github.com/ehbeam/learning2learn/blob/master/dopamine/dopamine_pathways.png?raw=true) top left no-repeat #fff;
           background-size: 500px;
           font-family: Avenir;
           font-size: 16px;
@@ -266,13 +291,13 @@
   <h1 style="font-size: 36px;">How the brain learns to learn</h1>
   <br/>
 
-  <div class="captionContainer">
+  <div class="captionContainer" style="text-align:center">
     Review of Wang, J. X. <i>et al.</i> (2018) <a href="https://www.nature.com/articles/s41593-018-0147-8" target="_blank">Prefrontal cortex as a meta-reinforcement learning system</a>
   </div>
   <br/><br/>
 
   <h4>By Ellie Beam</h4>
-  <br/>
+  <br/><br/>
 </center>
 
 <div class="textContainer">
@@ -403,7 +428,7 @@
     }
     function drawPause() {
       var img = new Image();
-      img.src = "https://raw.githubusercontent.com/ehbeam/learning2learn/master/arcade_game_tp.png";
+      img.src = "https://raw.githubusercontent.com/ehbeam/learning2learn/master/breakout/arcade_game_tp.png";
       // Original source is "https://image.flaticon.com/icons/svg/744/744594.svg"
       img.onload = function(){
         ctx.drawImage(img, 20, 5, 380, 370);
@@ -473,7 +498,7 @@
 </center><br/>
 
 <center><div class="captionContainer">
-    <p>
+    <p style="text-align:center">
       Image adapted from <a href="https://cdn3.vectorstock.com/i/1000x1000/21/97/simple-line-drawn-vintage-game-arcade-cabinet-icon-vector-3632197.jpg" target="_blank">here</a>. Game adapted from <a href="https://github.com/end3r/Gamedev-Canvas-workshop" target="_blank">here</a>.
     </p>
 </div></center>
@@ -485,14 +510,67 @@
     </p><br/>
 
     <p>
-      Through deep learning, AI has exceeded human performance in the game above, called Breakout, and developed gaming strategies with an impressive level of sophistication.<sup>1</sup> For example, AI has learned to win Breakout within just a few moves by bouncing the ball into the nook above the blocks where it can ricochet between them and the ceiling. Yet, AI has made little progress in learning how to apply general rules across games with a similar premise. A separate model has had to be trained afresh for each game in the Atari repertoire. 
+      Through deep learning, AI has exceeded human performance in the game above, called Breakout, and developed gaming strategies with an impressive level of sophistication.<a href="#footnote1" class="footnoteLink"><sup>1</sup></a> For example, AI has learned to win Breakout within just a few moves by bouncing the ball into the nook above the blocks where it can ricochet between them and the ceiling. Yet, AI has made little progress in learning how to apply general rules across games with a similar premise. A separate model has had to be trained afresh for each game in the Atari repertoire. 
     </p><br/>
 
     <p>
-      In contrast to AI, the brain learns quickly when thrown into new situations. It's long been understood that the brain is able to track how big of a reward it anticipates receiving from a given action. If the reward is larger than expected, then the action that led to it is reinforced by the release of the neurotransmitter dopamine from neurons in the midbrain. In addition to this system for learning, the prefrontal cortex also represents actions, expectations, and rewards in the activity of its neurons. Until recently, there was no overarching model to account for how the two systems work together to enable us to learn how to learn.
+      In contrast to AI, the brain learns quickly when thrown into new situations. It's long been understood that the brain is able to track how large a reward it anticipates receiving from a given action. If the reward is greater than expected, then the action that led to it is reinforced by the release of the neurotransmitter dopamine from neurons in the midbrain. In addition to this basic "reinforcement learning" system, the prefrontal cortex also represents actions, expectations, and rewards in the activity of its neurons. Until recently, there was no overarching model to account for how the two systems work together to enable us to learn how to learn.
     </p>
 </div>
 <br/><br/><br/>
+
+<script>
+
+  var onRL = "example"; var offRL = "theory";
+
+  var base = "https://raw.githubusercontent.com/ehbeam/learning2learn/master/diagram/rl_diagram/rl_";
+
+  function toggleRL() {
+
+    if (onRL == "theory") {
+      offRL = "example";
+    } else {
+      offRL = "theory";
+    }
+
+    document.getElementById("diagramRL").src = base + onRL + ".png";
+    document.getElementById(onRL + "Caption").style.display = "inline-block";
+    document.getElementById(offRL + "Caption").style.display = "none";
+
+    onRL = offRL; offRL = onRL;
+  }
+
+</script>
+
+<center>
+
+  <h2 style="font-size: 22px;">What is reinforcement learning?</h2><br/>
+
+  <img id="diagramRL" width="630px" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/rl_diagram/rl_theory.png" onclick="toggleRL()"/>
+
+</center><br/>
+
+<div class="captionContainer">
+    
+    <p id="theoryCaption" style="display:inline-block">
+      "Reinforcement learning" is a cycle of observing the world and taking actions that alter the world in order to maximize some reward. Observations are key to this cycle because they make it possible to learn which actions are most likely to yield a reward in a given set of circumstances. The agent in the reinforcement learning cycle may be a person, animal, or even a computer model.
+    </p>
+
+    <p id="exampleCaption" style="display:none">
+      You served as the reinforcement learning agent when you played the game Breakout above. This involved observing the world in which reinforcement learning took place, namely the ball, bricks, and paddle on the screen. You learned to move the paddle in a way that would earn you the most points and prevent you from losing lives.
+    </p>
+
+</div><br/><br/>
+
+<div class="textContainer">
+    <p>
+      At <a href="https://deepmind.com/" target="_blank">DeepMind</a>, researchers leverage knowledge of how the brain learns in order to develop more efficient AI models. Their director of neuroscience research, Matt Botvinick, has <a href="https://youtu.be/uv4Hh3wDH14" target="_blank">likened this strategy</a> to understanding how birds fly in order to build better planes. While there are plenty of differences between birds and planes, there are physical principles (e.g., lift) that may be gleaned from the natural implementation of flying and then applied to engineer powerful new technologies.
+    </p><br/>
+
+    <p>
+      In a recent publication, DeepMind advanced this process of innovation one step further, showing that their new model "plane" (i.e., AI model) had achieved a property of natural "flight" (i.e., the brain's ability to learn how to learn).<a href="#footnote2" class="footnoteLink"><sup>2</sup></a> They started with the premise that the brain learns using the dopamine-based reinforcement system described above. One step further, Botvinick and his team theorized that dopamine neurons could set the synaptic weights in a second, meta-reinforcement learning system in the prefrontal cortex. They modeled this dual learning system using a recurrent neural network with simulated “dopamine” inputs.
+    </p><br/>
+</div><br/><br/>
 
 <center><div id="brainContainer">
   <ul id="brainMap">
@@ -517,45 +595,37 @@
   </ul>
 </div></center>
 
-<center><div class="captionContainer">
+<div class="captionContainer">
     <p>
       Midbrain dopamine neurons are classically thought to support reinforcement learning. The prefrontal cortex is thought to "learn how to learn" by implementing a meta-reinforcement learning algorithm. Its neural connections are weighted by input from dopamine neurons running in the mesocortical pathway. 
     </p>
-</div></center>
-<br/><br/>
+</div>
+<br/><br/><br/>
 
 <div class="textContainer">
     <p>
-      At <a href="https://deepmind.com/" target="_blank">DeepMind</a>, researchers leverage knowledge of how the brain learns in order to develop more efficient AI models. Their director of neuroscience research, Matt Botvinick, has <a href="https://youtu.be/uv4Hh3wDH14" target="_blank">likened this strategy</a> to understanding how birds fly in order to build better planes. While there are plenty of differences between birds and planes, there are physical principles (e.g., lift) that may be gleaned from the natural implementation of flying and then applied to engineer powerful new technologies.
-    </p><br/>
-
-    <p>
-      In a recent publication, DeepMind advanced this process of innovation one step further, showing that their new model "plane" (i.e., AI model) had achieved a property of natural "flight" (i.e., the brain's ability to learn how to learn).<sup>2</sup> They started with the premise that the brain learns using the dopamine-based reinforcement system described above. One step further, Botvinick and his team theorized that dopamine neurons could set the synaptic weights in a second, meta-reinforcement learning system in the prefrontal cortex. They modeled this dual learning system using a recurrent neural network with simulated “dopamine” inputs.
-    </p><br/>
-
-    <p>
-      The researchers showed that their model was able to learn like the brain by having it perform the same kinds of tasks as monkeys and humans in previous neuroscience studies. One of these tasks was adapted from a classic experiment led by Harry Harlow in 1949.<sup>3</sup> In the original study, two objects were set before a monkey who would have to choose which one covered a food reward. The objects remained the same for six trials, over which the animal was able to learn which object was rewarded. Then, the objects were switched out for two new objects. You can play the same kind of task here:
+      The researchers showed that their model was able to learn like the brain by having it perform the same kinds of tasks as monkeys and humans in previous neuroscience studies. One of these tasks was adapted from a classic experiment led by Harry Harlow in 1949.<a href="#footnote3" class="footnoteLink"><sup>3</sup></a> In the original study, two objects were set before a monkey who would have to choose which one covered a food reward. The objects remained the same for six trials, over which the animal was able to learn which object was rewarded. Then, the objects were switched out for two new objects. You can play the same kind of task here:
     </p><br/>
 </div>
 
 <div id="harlowTask" width="800px" height="800px">
 
-  <img id="airplane" class="harlowImg" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/images/airplane.png" />
-  <img id="banana" class="harlowImg" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/images/banana.png" />
-  <img id="camera" class="harlowImg" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/images/camera.png" />
-  <img id="cat" class="harlowImg" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/images/cat.png" />
-  <img id="cupcake" class="harlowImg" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/images/cupcake.png" />
-  <img id="dog" class="harlowImg" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/images/dog.png" />
-  <img id="donut" class="harlowImg" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/images/donut.png" />
-  <img id="fox" class="harlowImg" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/images/fox.png" />
-  <img id="icecream" class="harlowImg" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/images/icecream.png" />
-  <img id="pizza" class="harlowImg" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/images/pizza.png" />
-  <img id="shell" class="harlowImg" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/images/shell.png" />
-  <img id="umbrella" class="harlowImg" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/images/umbrella.png" />
+  <img id="airplane" class="harlowImg" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/harlow/images/airplane.png" />
+  <img id="banana" class="harlowImg" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/harlow/images/banana.png" />
+  <img id="camera" class="harlowImg" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/harlow/images/camera.png" />
+  <img id="cat" class="harlowImg" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/harlow/images/cat.png" />
+  <img id="cupcake" class="harlowImg" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/harlow/images/cupcake.png" />
+  <img id="dog" class="harlowImg" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/harlow/images/dog.png" />
+  <img id="donut" class="harlowImg" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/harlow/images/donut.png" />
+  <img id="fox" class="harlowImg" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/harlow/images/fox.png" />
+  <img id="icecream" class="harlowImg" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/harlow/images/icecream.png" />
+  <img id="pizza" class="harlowImg" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/harlow/images/pizza.png" />
+  <img id="shell" class="harlowImg" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/harlow/images/shell.png" />
+  <img id="umbrella" class="harlowImg" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/harlow/images/umbrella.png" />
 
-  <img id="BLANK" class="harlowImg" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/images/BLANK.png" />
-  <img id="YES" class="harlowImg" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/images/YES.png" />
-  <img id="NO" class="harlowImg" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/images/NO.png" />
+  <img id="BLANK" class="harlowImg" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/harlow/images/BLANK.png" />
+  <img id="YES" class="harlowImg" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/harlow/images/YES.png" />
+  <img id="NO" class="harlowImg" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/harlow/images/NO.png" />
 
   <br/>
 
@@ -660,13 +730,13 @@
   var cA = document.getElementById("canvasA");
   var ctxA = cA.getContext("2d");
   var imgA = new Image();
-  imgA.src = "https://raw.githubusercontent.com/ehbeam/learning2learn/master/images/" + imagesA[0] + ".png";
+  imgA.src = "https://raw.githubusercontent.com/ehbeam/learning2learn/master/harlow/images/" + imagesA[0] + ".png";
   imgA.onload = function(){ ctxA.drawImage(imgA, dx, dy, width, height) };
 
   var cB = document.getElementById("canvasB");
   var ctxB = cB.getContext("2d");
   var imgB = new Image();
-  imgB.src = "https://raw.githubusercontent.com/ehbeam/learning2learn/master/images/" + imagesB[0] + ".png";
+  imgB.src = "https://raw.githubusercontent.com/ehbeam/learning2learn/master/harlow/images/" + imagesB[0] + ".png";
   imgB.onload = function(){ ctxB.drawImage(imgB, dx, dy, width, height) };
 
   var toggle = "OFF"
@@ -761,7 +831,7 @@
 <br/>
 <center><div class="captionContainer">
     <p>
-      Wang <i>et al.</i> (2018) trained a meta-reinforcement learning model to perform the same kind of task as above,<sup>1</sup> which was originally developed by the neurophysiologist Harry Harlow in 1949.<sup>3</sup> Over six trials, one object in each pair is rewarded. The pair of objects is then switched. In order to demonstrate "learning to learn," the model would have to pick up on the rule of the game that one of the two objects in each new pair would be rewarded.
+      Wang <i>et al.</i> (2018) trained a meta-reinforcement learning model to perform the same kind of task as above,<a href="#footnote1" class="footnoteLink"><sup>1</sup></a> which was originally developed by the neurophysiologist Harry Harlow in 1949.<a href="#footnote3" class="footnoteLink"><sup>3</sup></a> Over six trials, one object in each pair is rewarded. The pair of objects is then switched. In order to demonstrate "learning to learn," the model proposed by Wang <i>et al.</i> would have to pick up on the rule of the game that one of the two objects in each new pair would be rewarded.
     </p>
 </div></center>
 <br/><br/>
@@ -773,13 +843,13 @@
 </div><br/><br/>
 
 <center>
-  <img class="harlowPerf" width="630px" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/harlow_task.png"/>
+  <img class="harlowPerf" width="630px" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/harlow/harlow_task.png"/>
 </center>
 <br/>
 
 <center><div class="captionContainer">
     <p>
-      Performance on the Harlow task. The overall pattern and number of object sets require to reach peak performance was similar between the monkey (left) and the meta-reinforcement learning model (right). Adapted from Figure 6 of Wang <i>et al</i>.<sup>2</sup>
+      Performance on the Harlow task. The overall pattern and number of object sets require to reach peak performance was similar between the monkey (left) and the meta-reinforcement learning model (right). Adapted from Figure 6 of Wang <i>et al</i>.<a href="#footnote2" class="footnoteLink"><sup>2</sup></a>
     </p>
 </div></center>
 <br/><br/>
@@ -799,11 +869,11 @@
 
     <ol>
 
-      <li>Mnih, V. <i>et al.</i> <a href="https://www.nature.com/articles/nature14236" target="_blank">Human-level control through deep reinforcement learning</a>. <i>Nature Neuroscience</i> (2015).</li>
+      <li id="footnote1">Mnih, V. <i>et al.</i> <a href="https://www.nature.com/articles/nature14236" target="_blank">Human-level control through deep reinforcement learning</a>. <i>Nature Neuroscience</i> (2015).</li>
 
-      <li>Wang, J. X. <i>et al.</i> <a href="https://www.nature.com/articles/s41593-018-0147-8" target="_blank">Prefrontal cortex as a meta-reinforcement learning system</a>. <i>Nature Neuroscience</i> (2018).</li>
+      <li id="footnote2">Wang, J. X. <i>et al.</i> <a href="https://www.nature.com/articles/s41593-018-0147-8" target="_blank">Prefrontal cortex as a meta-reinforcement learning system</a>. <i>Nature Neuroscience</i> (2018).</li>
 
-      <li>Harlow, H. <a href="https://psycnet.apa.org/record/1949-03097-001" target="_blank">The formation of learning sets</a>. <i>Psychological Review</i> (1949).</li>
+      <li id="footnote3">Harlow, H. <a href="https://psycnet.apa.org/record/1949-03097-001" target="_blank">The formation of learning sets</a>. <i>Psychological Review</i> (1949).</li>
 
     </ol><br/>
     

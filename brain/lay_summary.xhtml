@@ -124,7 +124,39 @@
         }
 
         #congrats {
-          font-size: 60px;
+          font-size: 32px;
+        }
+
+        svg {
+          display: block;
+          margin: 0 auto;
+        }
+
+        .axis { 
+          font: Avenir;
+          font-size: 20px;
+          stroke-width: 2px;
+        }
+
+        .line {
+          fill: none;
+          stroke: gray;
+          stroke-width: 4px;
+        }
+          
+        .overlay {
+          fill: none;
+          pointer-events: all;
+        }
+
+        .dot {
+          fill: gray;
+          stroke: gray;
+        }
+          
+        .focus circle {
+          fill: none;
+          stroke: black;
         }
 
         .positionButton {
@@ -442,7 +474,10 @@
 
     </style>
 </head>
+
 <body onload="activate(event,'xhtml')">
+
+<script src="https://d3js.org/d3.v5.min.js"></script>
 
 <br/>
 <h1><center>How the brain learns to learn</center></h1>
@@ -463,7 +498,7 @@
        Artificial intelligence (AI) has rocketed ahead in its ability to recognize human faces, make medical diagnoses, and drive autonomous cars. A remaining limitation on the growth of AI is that its algorithms require vast amounts of data to train. Humans, by contrast, can "get" the crux of many types of problems even with little context and experience. As a quick demonstration of this, press play below.
     </p>
 </div>
-<br/>
+<br/><br/>
 
 <br/>
 <canvas id="gameCanvas" width="420" height="380"></canvas>
@@ -661,7 +696,7 @@
       Image adapted from <a href="https://cdn3.vectorstock.com/i/1000x1000/21/97/simple-line-drawn-vintage-game-arcade-cabinet-icon-vector-3632197.jpg" target="_blank">here</a>. Game adapted from <a href="https://github.com/end3r/Gamedev-Canvas-workshop" target="_blank">here</a>.
     </p>
 </div></center>
-<br/>
+<br/><br/>
 
 <div class="textContainer">
     <p>
@@ -735,7 +770,7 @@ colorIndex="41 41 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42
       The prefrontal cortex (red) is thought to "learn how to learn" by implementing a meta-reinforcement learning algorithm. Its synaptic weights are tuned by input from dopamine neurons in subcortical regions (blue, medial aspect) which support reinforcement learning as it's classically defined. Brain structures are segmented above according to the <a href="http://neuro.imm.dtu.dk/wiki/Harvard-Oxford_Atlas" target="_blank">Harvard-Oxford atlas</a>. Visualization adapted from the <a href="https://scalablebrainatlas.incf.org/human/HOA06" target="_blank">Scalable Brain Atlas</a>. 
     </p>
 </div></center>
-<br/>
+<br/><br/>
 
 <div class="textContainer">
     <p>
@@ -776,17 +811,88 @@ colorIndex="41 41 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42
     <canvas id="canvasA" class="canvas" width="300" height="300"></canvas>
     <canvas id="canvasB" class="canvas" width="300" height="300"></canvas>
   </center>
+
   <center>
     <span id="congrats"></span>
     <div id="scoreBoard">
       <p>Score: <span id="score"></span></p>
     </div>
+    <br/>
+  </center>
+
+  <center>
+    <div id="d3Plot"></div>
   </center>
 
 </div>
 
 <script type="text/javascript">
 //<![CDATA[
+
+  var plotLine = function(data) {
+    var margin = {top: 50, right: 50, bottom: 100, left: 100}
+      , width = 800 - margin.left - margin.right 
+      , height = 350 - margin.top - margin.bottom;
+    var n = data.length;
+    var xScale = d3.scaleLinear()
+        .domain([-0.5, n-0.5])
+        .range([0, width]);
+    var yScale = d3.scaleLinear()
+        .domain([0, 6]) 
+        .range([height, 0]); 
+    var line = d3.line()
+        .x(function(d, i) { return xScale(i); }) 
+        .y(function(d) { return yScale(d.y); }) 
+        .curve(d3.curveMonotoneX) 
+    var dataset = d3.range(n).map(function(d) { return {"y": data[d] } })
+    var svg = d3.select("#d3Plot").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(xScale)
+          .ticks(n)); 
+    svg.append("g")
+        .attr("class", "y axis")
+        .call(d3.axisLeft(yScale)
+          .ticks(6)); 
+    svg.append("path")
+        .datum(dataset) 
+        .attr("class", "line") 
+        .attr("d", line); 
+    svg.selectAll(".dot")
+        .data(dataset)
+      .enter().append("circle") 
+        .attr("class", "dot") 
+        .attr("cx", function(d, i) { return xScale(i) })
+        .attr("cy", function(d) { return yScale(d.y) })
+        .attr("r", 6)
+      svg.append("text")             
+        .attr("transform",
+              "translate(" + (width / 2) + " ," + 
+                             (height + margin.top + 8) + ")")
+        .style("text-anchor", "middle")
+        .style("font-size", "24px")
+        .text("Epoch");
+      svg.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 0 - margin.left + 30)
+        .attr("x", 0 - (height / 2))
+        .attr("dy", "1em")
+        .style("text-anchor", "middle")
+        .style("font-size", "24px")
+        .text("Score");   
+  };
+
+  var endGame = function(scores) {
+    document.getElementById("canvasA").style.display = "none";
+      document.getElementById("canvasB").style.display = "none";
+      document.getElementById("congrats").innerHTML = "You finished!<br/><br style='line-height:5px;'/>";
+      document.getElementById("scoreBoard").innerHTML = "Scores: " + scores.join(", ");
+  };
 
   var imagesA = ["cat", "airplane", "shell", "dog", "donut", "icecream"];
   var imagesB = ["cupcake", "fox", "banana", "camera", "pizza", "umbrella"];
@@ -801,22 +907,18 @@ colorIndex="41 41 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42
   var cA = document.getElementById("canvasA");
   var ctxA = cA.getContext("2d");
   var imgA = new Image();
-  imgA.src = "https://raw.githubusercontent.com/ehbeam/learning2learn/master/images/cat.png";
-  imgA.onload = function(){
-    ctxA.drawImage(imgA, dx, dy, width, height);
-  }
+  imgA.src = "https://raw.githubusercontent.com/ehbeam/learning2learn/master/images/" + imagesA[0] + ".png";
+  imgA.onload = function(){ ctxA.drawImage(imgA, dx, dy, width, height) };
 
   var cB = document.getElementById("canvasB");
   var ctxB = cB.getContext("2d");
   var imgB = new Image();
-  imgB.src = "https://raw.githubusercontent.com/ehbeam/learning2learn/master/images/cupcake.png";
-  imgB.onload = function(){
-    ctxB.drawImage(imgB, dx, dy, width, height);
-  }
+  imgB.src = "https://raw.githubusercontent.com/ehbeam/learning2learn/master/images/" + imagesB[0] + ".png";
+  imgB.onload = function(){ ctxB.drawImage(imgB, dx, dy, width, height) };
 
   var toggle = "OFF"
   document.getElementById("canvasA").addEventListener("click", function(){
-    if (nEpochs < 6) {
+    if (nEpochs < 3) {
       if (nTrials < 6) {
         if (toggle == "OFF") {
           toggle = "ON";
@@ -853,15 +955,13 @@ colorIndex="41 41 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42
         nPoints = 0;
       }
   } else {
-      document.getElementById("canvasA").style.display = "none";
-      document.getElementById("canvasB").style.display = "none";
-      document.getElementById("congrats").innerHTML = "You finished!<br/><br/>";
-      document.getElementById("scoreBoard").innerHTML = "Scores: " + scores.join(", ");
+      endGame(scores);
+      plotLine(scores);
     }
   });
 
   document.getElementById("canvasB").addEventListener("click", function(){
-    if (nEpochs < 6) {
+    if (nEpochs < 3) {
       if (nTrials < 6) {
         if (toggle == "OFF") {
           toggle = "ON";
@@ -898,12 +998,10 @@ colorIndex="41 41 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42
         nPoints = 0;
     }
     } else {
-      document.getElementById("canvasA").style.display = "none";
-      document.getElementById("canvasB").style.display = "none";
-      document.getElementById("congrats").innerHTML = "You finished!<br/><br/>";
-      document.getElementById("scoreBoard").innerHTML = "Scores: " + scores.join(", ");
+      endGame(scores);
+      plotLine(scores);
     } 
- });
+  });
 
   //]]>
 </script>
@@ -914,22 +1012,25 @@ colorIndex="41 41 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42
       Wang <i>et al.</i> (2018) trained a meta-reinforcement learning model to perform the same kind of task as shown above,<sup>1</sup> which was originally developed by the neurophysiologist Harry Harlow in 1949.<sup>3</sup> Over six trials, one object in each pair is rewarded. The pair of objects is then switched. In order to demonstrate "learning to learn," the model would have to pick up on the rule of the game that one of the two objects in each new pair would be rewarded.
     </p>
 </div></center>
-<br/>
+<br/><br/>
 
 <div class="textContainer">
     <p>
       When the brain performs this task, it initially chooses randomly between the objects. Over a few sets of objects, the brain "gets" the point of the game and is able to settle on the object hiding the reward after a single trial. This is an example of learning how to learn by applying an abstract rule from one scenario to another. Remarkably, the data recorded over the course of training Botvinick's meta-reinforcement learning model showed the same pattern as that recorded from behaving animals. In other words, the model could replicate the brain's process of learning how to learn. 
     </p><br/>
-</div>
+</div><br/><br/>
 
-<center><img class="taskPerf" width="600px" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/harlow_task.png"/></center><br/>
+<center>
+  <img class="taskPerf" width="600px" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/harlow_task.png"/>
+</center>
+<br/>
 
 <center><div class="captionContainer">
     <p>
       Performance on the Harlow task. The overall pattern and number of object sets require to reach peak performance was similar between the monkey (left) and the meta-reinforcement learning model (right). Adapted from Figure 6 of Wang <i>et al</i>.<sup>2</sup>
     </p>
 </div></center>
-<br/>
+<br/><br/>
 
 <div class="textContainer">
     <p>
@@ -938,7 +1039,7 @@ colorIndex="41 41 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42 42
 
     <p>
       From the engineer's perspective, these results are of immediate interest in developing improved applications of AI. In the near future, more efficient reinforcement learning algorithms may facilitate dynamic and individualized medical diagnostics; they may accelerate the deployment of autonomous vehicles on the road. AI isn't just playing games anymore. It will be an exciting time for engineers and ethicists alike as technology advances up to and beyond the limits of our own neural mechanisms.
-    </p><br/>
+    </p><br/><br/>
 
     <h2>
       References
