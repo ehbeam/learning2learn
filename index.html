@@ -97,13 +97,23 @@
           border-radius: 10px;
           border: black 2px solid;
           box-shadow: 3px 3px 5px #9b9b9b;
+          vertical-align: middle;
+        }
+
+        .diagramButton {
+          display: inline-block;
+          vertical-align: middle;
+          font-size: 30px;
+          font-style: bold;
+          margin: 15px;
           cursor: pointer;
+          text-shadow: 3px 3px 5px #9b9b9b;
         }
 
-        #diagramRL:hover {
-          box-shadow: 0px 0px 20px #d3c472;
+        .diagramButton:hover {
+          font-size: 40px;
+          text-shadow: 3px 3px 5px #d3c472;
         }
-
 
         #brainContainer {
           position: relative;
@@ -131,7 +141,6 @@
         #brainMap li a {
           position: absolute;
           display: block;
-          /*background: url(https://github.com/ehbeam/learning2learn/blob/master/images/BLANK.png?raw=true);*/
           text-decoration: none;
           color: #000;
         }
@@ -521,43 +530,53 @@
 
 <script>
 
-  var onRL = "example"; var offRL = "theory";
+  var index = 1;
+
+  var titles = ["What is reinforcement learning?", "What is reinforcement learning?", "What is <i>meta</i>-reinforcement learning?"];
+
+  var captions = [
+      "\"Reinforcement learning\" is a cycle of observing the world and taking actions that alter the world in order to maximize some reward. Observations are key to this cycle because they make it possible to learn which actions are most likely to yield a reward in a given set of circumstances. The agent in the reinforcement learning cycle may be a person, animal, or even a computer model.", 
+      "You served as the reinforcement learning agent when you played the game Breakout above. This involved observing the world in which reinforcement learning took place, namely the ball, bricks, and paddle on the screen. You learned to move the paddle in a way that would earn you the most points and prevent you from losing lives.", 
+      "In meta-reinforcement learning, a base system learns stable relationships between actions and rewards. These relationships are thought to be encoded in the brain with a dopamine signal. A second, <i>meta</i>-reinforcement system takes the dopamine signal as input and is able to learn more flexible action-reward pairings on the fly in a new context."
+      ];
 
   var base = "https://raw.githubusercontent.com/ehbeam/learning2learn/master/diagram/rl_";
 
-  function toggleRL() {
-
-    if (onRL == "theory") {
-      offRL = "example";
-    } else {
-      offRL = "theory";
-    }
-
-    document.getElementById("diagramRL").src = base + onRL + ".png";
-    document.getElementById(onRL + "Caption").style.display = "inline-block";
-    document.getElementById(offRL + "Caption").style.display = "none";
-
-    onRL = offRL; offRL = onRL;
+  function updateDiagram(index) {
+    document.getElementById("diagramRL").src = base + index + ".png";
+    document.getElementById("captionRL").innerHTML = captions[index-1];
+    document.getElementById("titleRL").innerHTML = titles[index-1];
   }
+
+  function nextDiagram() {
+    if (index < 3) { index = index + 1 } else { index = 1 };
+    updateDiagram(index);
+  }
+
+  function lastDiagram() {
+    if (index > 1) { index = index - 1 } else { index = 3 };
+    updateDiagram(index);
+  }
+
 
 </script>
 
 <center>
 
-  <h2 style="font-size: 22px;">What is reinforcement learning?</h2><br/>
+  <h2 id="titleRL" style="font-size: 22px;">What is reinforcement learning?</h2><br/>
 
-  <img id="diagramRL" width="550px" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/diagram/rl_theory.png" onclick="toggleRL()"/>
+  <span id="reverseRL" class="diagramButton" onclick="lastDiagram()"> << </span>
+
+  <img id="diagramRL" width="580px" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/diagram/rl_1.png"/>
+
+  <span id="forwardRL" class="diagramButton" onclick="nextDiagram()"> >> </span>
 
 </center><br/>
 
 <div class="captionContainer">
     
-    <p id="theoryCaption" style="display:inline-block">
+    <p id="captionRL">
       "Reinforcement learning" is a cycle of observing the world and taking actions that alter the world in order to maximize some reward. Observations are key to this cycle because they make it possible to learn which actions are most likely to yield a reward in a given set of circumstances. The agent in the reinforcement learning cycle may be a person, animal, or even a computer model.
-    </p>
-
-    <p id="exampleCaption" style="display:none">
-      You served as the reinforcement learning agent when you played the game Breakout above. This involved observing the world in which reinforcement learning took place, namely the ball, bricks, and paddle on the screen. You learned to move the paddle in a way that would earn you the most points and prevent you from losing lives.
     </p>
 
 </div><br/><br/><br/>
