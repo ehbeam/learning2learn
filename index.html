@@ -2,25 +2,314 @@
 <html lang="en">
 
   <head>
+
       <meta charset="utf-8" />
       <title>How the brain learns to learn</title>
       <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-      <style src="https://ehbeam.github.io/learning2learn/style.css"></style>
+    
+      <style>
+
+          * { 
+            font-family: Avenir;
+            padding: 0px;
+            margin: 0px;
+          }
+
+          body {
+            width: 1000px;
+            margin: auto;
+          }
+
+          h1 {
+            font-size: 38px;
+          }
+
+          button {
+            font-size: 14pt;
+            color: white;
+            background: #969696; 
+            margin: 10px;
+            padding: 5px;
+            padding-left: 40px;
+            padding-right: 40px;
+            border-radius: 5px;
+            border: black 2px solid;
+            box-shadow: 3px 3px 5px #9b9b9b;
+          }
+
+          button:hover {
+            cursor: pointer;
+            background-color: #4f4f4f;
+          }
+
+          button:focus {
+            outline: none;
+          }
+
+          a {
+            color: #4c4c4c;
+          }
+
+          ol {
+            padding-left: 50px;
+          }
+
+          li {
+            margin: 10px 0;
+          }
+
+          .footnoteLink {
+            cursor: pointer;
+            text-decoration: none;
+          }
+
+          .footnoteLink:hover {
+            text-decoration: none;
+            font-style: underline;
+          }
+
+          .textContainer {
+            display: inline-block;
+            width: 800px;
+            margin-left: 100px;
+            margin-right: 100px;
+            text-align: justify;
+          }
+
+          .captionContainer {
+            display: inline-block;
+            width: 700px;
+            margin-left: 150px;
+            margin-right: 150px;
+            text-align: justify;
+            font-size: 14px;
+            color: gray;
+          }
+
+          #breakoutCanvas { 
+            font-family: Avenir;
+            background: #eee; 
+            display: block; 
+            margin: 0 auto;
+            border-radius: 10px;
+            border: black 2px solid;
+            box-shadow: 3px 3px 5px #9b9b9b;
+          }
+
+          #diagramRL {
+            padding: 12px;
+            padding-right: 25px;
+            border-radius: 10px;
+            border: black 2px solid;
+            box-shadow: 3px 3px 5px #9b9b9b;
+            vertical-align: middle;
+          }
+
+          .diagramButton {
+            display: inline-block;
+            vertical-align: middle;
+            font-size: 30px;
+            font-style: bold;
+            margin: 15px;
+            cursor: pointer;
+            text-shadow: 3px 3px 5px #9b9b9b;
+          }
+
+          .diagramButton:hover {
+            font-size: 40px;
+            text-shadow: 3px 3px 5px #d3c472;
+          }
+
+          #brainContainer {
+            position: relative;
+            display: inline-block;
+            width: 800px;
+          }
+
+          #brainMap {
+            margin: 0px;
+            padding: 0px;
+            width: 500px;
+            height: 380px;
+            background: url(https://github.com/ehbeam/learning2learn/blob/master/dopamine/dopamine_pathways.png?raw=true) top left no-repeat #fff;
+            background-size: 500px;
+            font-family: Avenir;
+            font-size: 16px;
+          }
+
+          #brainMap li {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+          }
+
+          #brainMap li a {
+            position: absolute;
+            display: block;
+            text-decoration: none;
+            color: #000;
+          }
+
+          #brainMap li a span { 
+            display: none; 
+          }
+
+          #brainMap li a:hover span {
+            position: absolute;
+            display: block;
+            width: 200px;
+            left: 20px;
+            top: 20px;
+            border: 2px solid black;
+            border-radius: 15px;
+            background: white;
+            padding: 15px;
+            filter: alpha(opacity=80);
+            opacity: 0.8;
+          }
+
+          #brainMap a.vta {
+            top: 212px;
+            left: 385px;
+            width: 23px;
+            height: 25px;
+          }
+
+          #brainMap a.mcpL {
+            top: 30px;
+            left: 160px;
+            width: 100px;
+            height: 200px;
+          }
+
+          #brainMap a.mcpT {
+            top: 15px;
+            left: 260px;
+            width: 115px;
+            height: 100px;
+          }
+
+          #brainMap a.mcpB {
+            top: 180px;
+            left: 215px;
+            width: 120px;
+            height: 90px;
+          }
+           
+          #brainMap a.sn {
+            top: 209px;
+            left: 410px;
+            width: 20px;
+            height: 28px;
+          }
+
+          #brainMap a.nsp {
+            top: 120px;
+            left: 275px;
+            width: 150px;
+            height: 80px;
+          }
+
+          .pathwayLink {
+            font-weight: bold;
+          }
+
+          #harlowTask {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+          }
+
+          .canvas {
+            border: 2px solid black; 
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 20px;
+            background-color: white;
+            box-shadow: 3px 3px 5px #9b9b9b;
+          }
+
+          .canvas:hover {
+            box-shadow: 0px 0px 20px #d3c472;
+          }
+
+          .harlowImg {
+            display: none;
+          }
+
+          #harlowScore {
+            font-size: 20px;
+            width: 660px; 
+            height: 40px; 
+            background: #e2e2e2; 
+            border-radius: 25px;
+            display: table-cell; 
+            vertical-align: middle;
+          }
+
+          #harlowCongrats {
+            font-size: 32px;
+          }
+
+          svg {
+            display: block;
+            margin: 0 auto;
+          }
+
+          .axis { 
+            font: Avenir;
+            font-size: 20px;
+            stroke-width: 2px;
+          }
+
+          .line {
+            fill: none;
+            stroke: gray;
+            stroke-width: 4px;
+          }
+            
+          .overlay {
+            fill: none;
+            pointer-events: all;
+          }
+
+          .dot {
+            fill: gray;
+            stroke: gray;
+          }
+            
+          .focus circle {
+            fill: none;
+            stroke: black;
+          }
+
+          .harlowPerf {
+            padding: 12px;
+            padding-right: 25px;
+            border-radius: 10px;
+            border: black 2px solid;
+            box-shadow: 3px 3px 5px #9b9b9b;
+          }
+
+      </style>
   </head>
 
   <body>
 
-    <script src="https://ehbeam.github.io/learning2learn/main.js"></script>
+    <script src="https://ehbeam.github.io/learning2learn/main.js" />
 
     <center>
-      
+
       <br/><br/><br/><h1>How the brain learns to learn</h1><br/>
 
       <div class="captionContainer" style="text-align:center">
         Review of Wang, J. X. <i>et al.</i> (2018) <a href="https://www.nature.com/articles/s41593-018-0147-8" target="_blank">Prefrontal cortex as a meta-reinforcement learning system</a>
-      </div>
+      </div><br/><br/>
 
-      <br/><br/><h4>By Ellie Beam</h4><br/><br/>
+      <h4>By Ellie Beam</h4><br/><br/>
 
     </center>
 
@@ -28,9 +317,192 @@
           <p>
              Artificial intelligence (AI) has rocketed ahead in its ability to recognize faces, drive cars, and make medical diagnoses. A remaining limitation is that AI requires hours or days of training to learn how to respond appropriately in each new situation. Humans, by contrast, can quickly "get" the crux of problems despite little direct experience. For a demonstration of your ability to do this, simply press play below: 
           </p>
-    </div><br/><br/><br/>
+    </div> <br/><br/><br/>
 
     <canvas id="breakoutCanvas" width="420" height="380"></canvas>
+
+    <script>
+        var canvas = document.getElementById("breakoutCanvas");
+        var ctx = canvas.getContext("2d");
+        var ballRadius = 10;
+        var x = canvas.width/2;
+        var y = canvas.height-30;
+        var dx = 2;
+        var dy = -2;
+        var paddleHeight = 10;
+        var paddleWidth = 75;
+        var paddleX = (canvas.width-paddleWidth)/2;
+        var rightPressed = false;
+        var leftPressed = false;
+        var brickRowCount = 5;
+        var brickColumnCount = 3;
+        var brickWidth = 70;
+        var brickHeight = 20;
+        var brickPadding = 9;
+        var brickOffsetTop = 40;
+        var brickOffsetLeft = 16;
+        var score = 0;
+        var lives = 3;
+
+        var bricks = [];
+        for(var c=0; c<brickColumnCount; c++) {
+            bricks[c] = [];
+            for(var r=0; r<brickRowCount; r++) {
+                bricks[c][r] = { x: 0, y: 0, status: 1 };
+            }
+        }
+
+        document.addEventListener("keydown", keyDownHandler, false);
+        document.addEventListener("keyup", keyUpHandler, false);
+        document.addEventListener("mousemove", mouseMoveHandler, false);
+
+        function keyDownHandler(e) {
+            if(e.keyCode == 39) {
+                rightPressed = true;
+            }
+            else if(e.keyCode == 37) {
+                leftPressed = true;
+            }
+        }
+        function keyUpHandler(e) {
+            if(e.keyCode == 39) {
+                rightPressed = false;
+            }
+            else if(e.keyCode == 37) {
+                leftPressed = false;
+            }
+        }
+        function mouseMoveHandler(e) {
+            var relativeX = e.clientX - canvas.offsetLeft;
+            if(relativeX > 0 && relativeX < canvas.width) {
+                paddleX = relativeX - paddleWidth/2;
+            }
+        }
+        function collisionDetection() {
+            for(var c=0; c<brickColumnCount; c++) {
+                for(var r=0; r<brickRowCount; r++) {
+                    var b = bricks[c][r];
+                    if(b.status == 1) {
+                        if(x > b.x && x < b.x+brickWidth && y > b.y && y < b.y+brickHeight) {
+                            dy = -dy;
+                            b.status = 0;
+                            score++;
+                            if(score == brickRowCount*brickColumnCount) {
+                                alert("You win!");
+                                document.location.reload();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        function drawBall() {
+            ctx.beginPath();
+            ctx.arc(x, y, ballRadius, 0, Math.PI*2);
+            ctx.fillStyle = "#366E6A";
+            ctx.fill();
+            ctx.closePath();
+        }
+        function drawPaddle() {
+            ctx.beginPath();
+            ctx.rect(paddleX, canvas.height-paddleHeight, paddleWidth, paddleHeight);
+            ctx.fillStyle = "#606060";
+            ctx.fill();
+            ctx.closePath();
+        }
+        function drawBricks() {
+            for(var c=0; c<brickColumnCount; c++) {
+                for(var r=0; r<brickRowCount; r++) {
+                    if(bricks[c][r].status == 1) {
+                        var brickX = (r*(brickWidth+brickPadding))+brickOffsetLeft;
+                        var brickY = (c*(brickHeight+brickPadding))+brickOffsetTop;
+                        bricks[c][r].x = brickX;
+                        bricks[c][r].y = brickY;
+                        ctx.beginPath();
+                        ctx.rect(brickX, brickY, brickWidth, brickHeight);
+                        ctx.fillStyle = "#9D455F";
+                        ctx.fill();
+                        ctx.closePath();
+                    }
+                }
+            }
+        }
+        function drawScore() {
+            ctx.font = "16px Avenir";
+            ctx.fillStyle = "gray";
+            ctx.fillText("Score: "+score, 15, 25);
+        }
+        function drawLives() {
+            ctx.font = "16px Avenir";
+            ctx.fillStyle = "gray";
+            ctx.fillText("Lives: "+lives, canvas.width-70, 25);
+        }
+        function drawPause() {
+          var img = new Image();
+          img.src = "https://raw.githubusercontent.com/ehbeam/learning2learn/master/breakout/arcade_game_tp.png";
+          // Original source is "https://image.flaticon.com/icons/svg/744/744594.svg"
+          img.onload = function(){
+            ctx.drawImage(img, 20, 5, 380, 370);
+          }
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawBricks();
+            drawBall();
+            drawPaddle();
+            drawScore();
+            drawLives();
+            collisionDetection();
+
+            if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
+                dx = -dx;
+            }
+            if(y + dy < ballRadius) {
+                dy = -dy;
+            }
+            else if(y + dy > canvas.height-ballRadius) {
+                if(x > paddleX && x < paddleX + paddleWidth) {
+                    dy = -dy;
+                }
+                else {
+                    lives--;
+                    if(!lives) {
+                        alert("Game over");
+                        document.location.reload();
+                    }
+                    else {
+                        x = canvas.width/2;
+                        y = canvas.height-30;
+                        dx = 3;
+                        dy = -3;
+                        paddleX = (canvas.width-paddleWidth)/2;
+                    }
+                }
+            }
+
+            if(rightPressed && paddleX < canvas.width-paddleWidth) {
+                paddleX += 7;
+            }
+            else if(leftPressed && paddleX > 0) {
+                paddleX -= 7;
+            }
+
+            x += dx;
+            y += dy;
+            requestAnimationFrame(draw);
+        }
+
+        function stop() {
+            document.location.reload();
+            drawPause();
+        }
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawPause();
+
+    </script>
 
     <center>
         <button id="playButton" onclick="draw();">Play</button>
@@ -55,7 +527,41 @@
         <p>
           In contrast to AI, the brain learns quickly when thrown into new situations. It's long been understood that the brain is able to track how large a reward it anticipates receiving from a given action. If the reward is greater than expected, then the action that led to it is reinforced by the release of the neurotransmitter dopamine from neurons in the midbrain. In addition to this basic "reinforcement learning" system, the prefrontal cortex also represents actions, expectations, and rewards in the activity of its neurons. Until recently, there was no overarching model to account for how the two systems work together to enable us to learn how to learn.
         </p>
-    </div><br/><br/><br/>
+    </div>
+    <br/><br/><br/>
+
+    <script>
+
+      var index = 1;
+
+      var titles = ["What is reinforcement learning?", "What is reinforcement learning?", "What is <i>meta</i>-reinforcement learning?"];
+
+      var captions = [
+          "\"Reinforcement learning\" is a cycle of observing the world and taking actions that alter the world in order to maximize some reward. Observations are key to this cycle because they make it possible to learn which actions are most likely to yield a reward in a given set of circumstances. The agent in the reinforcement learning cycle may be a person, animal, or even a computer model.", 
+          "You served as the reinforcement learning agent when you played the game Breakout above. This involved observing the world in which reinforcement learning took place, namely the ball, bricks, and paddle on the screen. You learned to move the paddle in a way that would earn you the most points and prevent you from losing lives.", 
+          "In meta-reinforcement learning, a base system learns stable relationships between actions and rewards. These relationships are thought to be encoded in the brain with a dopamine signal. A second, <i>meta</i>-reinforcement system takes the dopamine signal as input and is able to learn more flexible action-reward pairings on the fly in a new context."
+          ];
+
+      var base = "https://raw.githubusercontent.com/ehbeam/learning2learn/master/diagram/rl_";
+
+      function updateDiagram(index) {
+        document.getElementById("diagramRL").src = base + index + ".png";
+        document.getElementById("captionRL").innerHTML = captions[index-1];
+        document.getElementById("titleRL").innerHTML = titles[index-1];
+      }
+
+      function nextDiagram() {
+        if (index < 3) { index = index + 1 } else { index = 1 };
+        updateDiagram(index);
+      }
+
+      function lastDiagram() {
+        if (index > 1) { index = index - 1 } else { index = 3 };
+        updateDiagram(index);
+      }
+
+
+    </script>
 
     <center>
 
@@ -114,8 +620,7 @@
         <p>
           Midbrain dopamine neurons are classically thought to support reinforcement learning. The prefrontal cortex is thought to "learn how to learn" by implementing a meta-reinforcement learning algorithm. Its neural connections are weighted by input from dopamine neurons running in the <span class="pathwayLink" style="color:#366E6A">mesocortical pathway</span>. In addition to the role of dopamine in learning, there are dopamine neurons running in the <span class="pathwayLink" style="color:#9D455F">nigrostriatal pathway</span> which facilitate movement, and in the <span style="font-weight:bold">mesolimbic pathway</span> (not shown) which support emotional processing.
         </p>
-    </div>
-    <br/><br/><br/>
+    </div><br/><br/><br/>
 
     <div class="textContainer">
         <p>
@@ -137,7 +642,6 @@
       <img id="pizza" class="harlowImg" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/harlow/images/pizza.png" />
       <img id="shell" class="harlowImg" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/harlow/images/shell.png" />
       <img id="umbrella" class="harlowImg" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/harlow/images/umbrella.png" />
-
       <img id="BLANK" class="harlowImg" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/harlow/images/BLANK.png" />
       <img id="YES" class="harlowImg" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/harlow/images/YES.png" />
       <img id="NO" class="harlowImg" src="https://raw.githubusercontent.com/ehbeam/learning2learn/master/harlow/images/NO.png" /><br/>
@@ -160,6 +664,185 @@
       </center>
 
     </div>
+
+    <script type="text/javascript">
+
+      var plotLine = function(data) {
+        var margin = {top: 50, right: 50, bottom: 100, left: 100}
+          , width = 800 - margin.left - margin.right 
+          , height = 350 - margin.top - margin.bottom;
+        var n = data.length;
+        var xScale = d3.scaleLinear()
+            .domain([-0.5, n-0.5])
+            .range([0, width]);
+        var yScale = d3.scaleLinear()
+            .domain([0, 6]) 
+            .range([height, 0]); 
+        var line = d3.line()
+            .x(function(d, i) { return xScale(i); }) 
+            .y(function(d) { return yScale(d.y); }) 
+            .curve(d3.curveMonotoneX) 
+        var dataset = d3.range(n).map(function(d) { return {"y": data[d] } })
+        var svg = d3.select("#d3Plot").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+          .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+        svg.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + height + ")")
+            .call(d3.axisBottom(xScale)
+              .ticks(n)); 
+        svg.append("g")
+            .attr("class", "y axis")
+            .call(d3.axisLeft(yScale)
+              .ticks(6)); 
+        svg.append("path")
+            .datum(dataset) 
+            .attr("class", "line") 
+            .attr("d", line); 
+        svg.selectAll(".dot")
+            .data(dataset)
+          .enter().append("circle") 
+            .attr("class", "dot") 
+            .attr("cx", function(d, i) { return xScale(i) })
+            .attr("cy", function(d) { return yScale(d.y) })
+            .attr("r", 6)
+          svg.append("text")             
+            .attr("transform",
+                  "translate(" + (width / 2) + " ," + 
+                                 (height + margin.top + 8) + ")")
+            .style("text-anchor", "middle")
+            .style("font-size", "24px")
+            .text("Epoch");
+          svg.append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 0 - margin.left + 30)
+            .attr("x", 0 - (height / 2))
+            .attr("dy", "1em")
+            .style("text-anchor", "middle")
+            .style("font-size", "24px")
+            .text("Score");   
+      };
+
+      var endGame = function(scores) {
+        document.getElementById("instructions").style.display = "none";
+        document.getElementById("canvasA").style.display = "none";
+        document.getElementById("canvasB").style.display = "none";
+        document.getElementById("harlowCongrats").innerHTML = "You finished!<br/><br style='line-height:5px;'/>";
+        document.getElementById("harlowScore").innerHTML = "Scores: " + scores.join(", ");
+      };
+
+      var imagesA = ["cat", "airplane", "shell", "dog", "donut", "icecream"];
+      var imagesB = ["cupcake", "fox", "banana", "camera", "pizza", "umbrella"];
+
+      var correct = ["A", "B", "B", "A", "A", "B"]
+
+      var nTrials = 0; var nEpochs = 0; var nPoints = 0; var scores = [];
+      var dx = 20; var dy = 20; var width = 250; var height = 250;
+
+      document.getElementById("score").innerHTML = nPoints;
+
+      var cA = document.getElementById("canvasA");
+      var ctxA = cA.getContext("2d");
+      var imgA = new Image();
+      imgA.src = "https://raw.githubusercontent.com/ehbeam/learning2learn/master/harlow/images/" + imagesA[0] + ".png";
+      imgA.onload = function(){ ctxA.drawImage(imgA, dx, dy, width, height) };
+
+      var cB = document.getElementById("canvasB");
+      var ctxB = cB.getContext("2d");
+      var imgB = new Image();
+      imgB.src = "https://raw.githubusercontent.com/ehbeam/learning2learn/master/harlow/images/" + imagesB[0] + ".png";
+      imgB.onload = function(){ ctxB.drawImage(imgB, dx, dy, width, height) };
+
+      var toggle = "OFF"
+      document.getElementById("canvasA").addEventListener("click", function(){
+        if (nEpochs < 6) {
+          if (nTrials < 6) {
+            if (toggle == "OFF") {
+              toggle = "ON";
+              nTrials = nTrials + 1;
+              if (correct[nEpochs] == "A") {
+                ctxA.globalAlpha = 0.65;
+                var imgA = document.getElementById("YES");
+                ctxA.drawImage(imgA, 0, 0, width+50, height+50);
+                ctxA.globalAlpha = 1.0;
+                nPoints = nPoints + 1;
+                document.getElementById("score").innerHTML = nPoints;
+              } else {
+                ctxA.globalAlpha = 0.65;
+                var imgA = document.getElementById("NO");
+                ctxA.drawImage(imgA, 0, 0, width+50, height+50);
+                ctxA.globalAlpha = 1.0;
+                document.getElementById("score").innerHTML = nPoints;
+            }
+          } else {
+            toggle = "OFF";
+            var imgBlank = document.getElementById("BLANK");
+            ctxA.drawImage(imgBlank, dx, dy, width, height);
+            var imgA = document.getElementById(imagesA[nEpochs]);
+            ctxA.drawImage(imgA, dx, dy, width, height);
+            ctxB.drawImage(imgBlank, dx, dy, width, height);
+            var imgB = document.getElementById(imagesB[nEpochs]);
+            ctxB.drawImage(imgB, dx, dy, width, height);
+            document.getElementById("score").innerHTML = nPoints;
+          } 
+        } else {
+            nTrials = 0; 
+            nEpochs = nEpochs + 1;
+            scores.push(nPoints);
+            nPoints = 0;
+          }
+      } else {
+          endGame(scores);
+          plotLine(scores);
+        }
+      });
+
+      document.getElementById("canvasB").addEventListener("click", function(){
+        if (nEpochs < 6) {
+          if (nTrials < 6) {
+            if (toggle == "OFF") {
+              toggle = "ON";
+              nTrials = nTrials + 1;
+              if (correct[nEpochs] == "B") {
+                ctxB.globalAlpha = 0.65;
+                var imgB = document.getElementById("YES");
+                ctxB.drawImage(imgB, 0, 0, width+50, height+50);
+                ctxB.globalAlpha = 1.0;
+                nPoints = nPoints + 1;
+                document.getElementById("score").innerHTML = nPoints;
+              } else {
+                ctxB.globalAlpha = 0.65;
+                var imgB = document.getElementById("NO");
+                ctxB.drawImage(imgB, 0, 0, width+50, height+50);
+                ctxB.globalAlpha = 1.0;
+                document.getElementById("score").innerHTML = nPoints;
+              }
+            } else {
+              toggle = "OFF";
+              var imgBlank = document.getElementById("BLANK");
+              ctxA.drawImage(imgBlank, dx, dy, width, height);
+              var imgA = document.getElementById(imagesA[nEpochs]);
+              ctxA.drawImage(imgA, dx, dy, width, height);
+              ctxB.drawImage(imgBlank, dx, dy, width, height);
+              var imgB = document.getElementById(imagesB[nEpochs]);
+              ctxB.drawImage(imgB, dx, dy, width, height);
+              document.getElementById("score").innerHTML = nPoints;
+            } 
+          } else {
+          nTrials = 0; 
+            nEpochs = nEpochs + 1;
+            scores.push(nPoints);
+            nPoints = 0;
+        }
+        } else {
+          endGame(scores);
+          plotLine(scores);
+        } 
+      });
+
+    </script>
 
     <center><div class="captionContainer">
         <p>
@@ -207,4 +890,5 @@
     </div><br/><br/><br/>
 
   </body>
+  
 </html>
