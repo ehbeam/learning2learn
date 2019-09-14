@@ -19,6 +19,10 @@
           margin: auto;
         }
 
+        h1 {
+          font-size: 38px;
+        }
+
         button {
           font-size: 14pt;
           color: white;
@@ -124,8 +128,8 @@
         #brainMap {
           margin: 0px;
           padding: 0px;
-          width: 600px;
-          height: 400px;
+          width: 500px;
+          height: 380px;
           background: url(https://github.com/ehbeam/learning2learn/blob/master/dopamine/dopamine_pathways.png?raw=true) top left no-repeat #fff;
           background-size: 500px;
           font-family: Avenir;
@@ -164,45 +168,49 @@
         }
 
         #brainMap a.vta {
-          top: 214px;
-          left: 338px;
+          top: 212px;
+          left: 385px;
           width: 23px;
           height: 25px;
         }
 
         #brainMap a.mcpL {
           top: 30px;
-          left: 120px;
+          left: 160px;
           width: 100px;
           height: 200px;
         }
 
         #brainMap a.mcpT {
           top: 15px;
-          left: 220px;
+          left: 260px;
           width: 115px;
           height: 100px;
         }
 
         #brainMap a.mcpB {
           top: 180px;
-          left: 175px;
+          left: 215px;
           width: 120px;
           height: 90px;
         }
          
         #brainMap a.sn {
-          top: 198px;
-          left: 352px;
-          width: 24px;
+          top: 209px;
+          left: 410px;
+          width: 20px;
           height: 28px;
         }
 
         #brainMap a.nsp {
           top: 120px;
-          left: 245px;
+          left: 275px;
           width: 150px;
           height: 80px;
+        }
+
+        .pathwayLink {
+          font-weight: bold;
         }
 
         #harlowTask {
@@ -297,7 +305,7 @@
 
 <center>
   <br/><br/><br/>
-  <h1 style="font-size: 36px;">How the brain learns to learn</h1>
+  <h1>How the brain learns to learn</h1>
   <br/>
 
   <div class="captionContainer" style="text-align:center">
@@ -612,11 +620,11 @@
     Dopamine neurons projecting from the substantia nigra to the caudate and putamen, which together make up the striatum.</span></a></li>
 
   </ul>
-</div></center>
+</div></center><br/>
 
 <div class="captionContainer">
     <p>
-      Midbrain dopamine neurons are classically thought to support reinforcement learning. The prefrontal cortex is thought to "learn how to learn" by implementing a meta-reinforcement learning algorithm. Its neural connections are weighted by input from dopamine neurons running in the mesocortical pathway. 
+      Midbrain dopamine neurons are classically thought to support reinforcement learning. The prefrontal cortex is thought to "learn how to learn" by implementing a meta-reinforcement learning algorithm. Its neural connections are weighted by input from dopamine neurons running in the <span class="pathwayLink" style="color:#366E6A">mesocortical pathway</span>. In addition to the role of dopamine in learning, there are dopamine neurons running in the <span class="pathwayLink" style="color:#9D455F">nigrostriatal pathway</span> which facilitate movement, and in the <span style="font-weight:bold">mesolimbic pathway</span> (not shown) which support emotional processing.
     </p>
 </div>
 <br/><br/><br/>
@@ -867,7 +875,7 @@
 
 <center><div class="captionContainer">
     <p>
-      Performance on the Harlow task. The overall pattern and number of object sets require to reach peak performance was similar between the monkey (left) and the meta-reinforcement learning model (right). Adapted from Figure 6 of Wang <i>et al</i>.<a href="#footnote2" class="footnoteLink"><sup>2</sup></a>
+      Performance on the Harlow task in terms of accuracy, computed as the percentage of objects that were correctly selected. The overall pattern for improvement in accuracy over the course of learning was similar between the monkey (left) and the computer model (right). Adapted from Figure 6 of Wang <i>et al</i>.<a href="#footnote2" class="footnoteLink"><sup>2</sup></a>
     </p>
 </div></center>
 <br/><br/>
